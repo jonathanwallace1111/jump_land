@@ -1,0 +1,34 @@
+{
+    "player": {
+        "id": "Protagonist",
+        "x": 0,
+        "y": 0,
+        "width": 10,
+        "height": 10,
+        "gravityDirection": "down",
+        "fillColor": "#000000",
+        "strokeColor": "#000000"
+    },
+    "boxes": [
+        {
+            "id": "WF-idNum-1",
+            "x": 10,
+            "y": 10,
+            "width": 10,
+            "height": 10,
+            "fillColor": "#000000",
+            "strokeColor": "#000000"
+        }
+    ],
+    "wallFloors": [
+        {
+            "id": "WF-idNum-1",
+            "x": 0,
+            "y": 0,
+            "width": 10,
+            "height": 10,
+            "fillColor": "#000000",
+            "strokeColor": "#000000"
+        }
+    ]
+}
