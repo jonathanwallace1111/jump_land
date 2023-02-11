@@ -1,0 +1,30 @@
+{
+  "name": "jump_land",
+  "version": "1.0.0",
+  "description": "A game",
+  "main": "main.js",
+  "author": "J Wallace",
+  "scripts": {
+    "start-legacy": "live-server ./srcbak",
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jpanagakis-iiq/jump_land/issues"
+  },
+  "homepage": "https://github.com/jpanagakis-iiq/jump_land#readme",
+  "devDependencies": {
+    "@electron-forge/cli": "^6.0.4",
+    "@electron-forge/maker-deb": "^6.0.4",
+    "@electron-forge/maker-rpm": "^6.0.4",
+    "@electron-forge/maker-squirrel": "^6.0.4",
+    "@electron-forge/maker-zip": "^6.0.4",
+    "electron": "^22.2.0",
+    "live-server": "^1.2.2"
+  },
+  "dependencies": {
+    "electron-squirrel-startup": "^1.0.0"
+  }
+}
