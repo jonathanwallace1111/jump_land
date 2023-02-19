@@ -1,4 +1,4 @@
-import LevelManifest from '../Levels';
+// import LevelManifest from '../Levels';
 
 export class LevelManager {
     constructor() {
@@ -11,7 +11,6 @@ export class LevelManager {
 
         let level = LevelManifest[levelNumber];
 
-        // load the level
         gom.clearObjects();
 
         let newLevelObjects = [

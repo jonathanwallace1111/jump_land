@@ -1,5 +1,4 @@
 
-
 export class GameObjectManager {
     constructor() {
         this.gameObjects = [];
