@@ -15,6 +15,9 @@ export default class Game {
     constructor() {
         this.state = new StateManager();
         this.controls = new ControlsManager(this.state);
+
+        
+
         this.colorObject = new ColorObject();
         this.physicsEngine = new PhysicsManager(this.state, this.colorObject);
 

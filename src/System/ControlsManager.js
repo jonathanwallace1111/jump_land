@@ -1,25 +1,104 @@
-export class ControlsManager{ 
+export class ControlsManager {
     constructor(state) {
 
         this.state = state;
 
-        this.keyPressedBool = false; 
-        this.keyPressed = []; 
+        this.keyPressedBool = false;
+        this.keyPressed = [];
 
         // this.lateralMovementV = 1; 
 
         // this goes in protagonist
         this.jumpStrength = 3;
+
+
+        //EXPERIMENTAL CODE
+        this.keyCodeMap = {
+            37: 'left',
+            38: 'up',
+            39: 'right',
+            40: 'down',
+        }
+
+        //EXPERIMENTAL CODE
+        this.controlMap = {
+            up: false,
+            down: false,
+            left: false,
+            right: false,
+        };
+
+        this.liveKeyMap = {};
+
+        window.keyPressed = this.keyIsPressed.bind(this);
+        window.keyReleased = this.keyIsReleased.bind(this);
+
+
+
+    }
+
+
+    //EXPERIMENTAL CODE
+    keyIsPressed = () => {
+        if (this.keyCodeMap[keyCode]) {
+            this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
+        }
+
+        if (keyCode === 38) { // up
+            this.keyPressed.push("up");
+        }
+        if (keyCode === 40) { // down 
+            this.keyPressed.push("down");
+        }
+        if (keyCode === 37) { // left 
+            this.keyPressed.push("left");
+        }
+        if (keyCode === 39) { // right 
+            this.keyPressed.push("right");
+        }
+
+
+
+        this.keyPressedBool = true;
+    }
+
+    //EXPERIMENTAL CODE
+    keyIsReleased = () => {
+        if (this.keyCodeMap[keyCode]) {
+            this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
+        }
+
+        if (keyCode === 38) { // up
+            let indexOfDir = this.keyPressed.indexOf("up");
+            this.keyPressed.splice(indexOfDir, 1);  
+          }   
+          if (keyCode === 40) { // down
+            let indexOfDir = this.keyPressed.indexOf("down");
+            this.keyPressed.splice(indexOfDir, 1);
+          }     
+          if (keyCode === 37) { // left ; 
+            let indexOfDir = this.keyPressed.indexOf("left");
+            this.keyPressed.splice(indexOfDir, 1); 
+          } 
+          if (keyCode === 39) { // right 
+            let indexOfDir = this.keyPressed.indexOf("right");
+            this.keyPressed.splice(indexOfDir, 1); 
+          }
+
+
+        if (this.keyPressed.length === 0) {
+            this.keyPressedBool = false;
+        }
     }
 
     moveLaterally = (gravityDirection, gravOpposite, protagonist) => {
         let latDirAPressedBool = this.keyPressed.includes(this.state.lateralDirections.a);
         let latDirBPressedBool = this.keyPressed.includes(this.state.lateralDirections.b);
 
-        let latDirToMove = null; 
+        let latDirToMove = null;
 
         if (latDirAPressedBool && latDirBPressedBool) {
-            return; 
+            return;
         } else if (latDirAPressedBool) {
             latDirToMove = this.state.lateralDirections.a;
         } else if (latDirBPressedBool) {
@@ -29,22 +108,22 @@ export class ControlsManager{
         switch (latDirToMove) {
             case "up":
                 // protagonist.addAccelerationToVelocity();
-                protagonist.yv -= protagonist.currentVAbs;  
-                break; 
+                protagonist.yv -= protagonist.currentVAbs;
+                break;
             case "down":
                 // protagonist.addAccelerationToVelocity();
-                protagonist.yv += protagonist.currentVAbs; 
-                break; 
+                protagonist.yv += protagonist.currentVAbs;
+                break;
             case "left":
                 // protagonist.addAccelerationToVelocity();
                 protagonist.xv -= protagonist.currentVAbs;
-                break; 
+                break;
             case "right":
                 // protagonist.addAccelerationToVelocity();
                 protagonist.xv += protagonist.currentVAbs;
-                break; 
-            default : 
-                return; 
+                break;
+            default:
+                return;
         }
     }
 
@@ -53,30 +132,35 @@ export class ControlsManager{
             case "up":
                 protagonist.yv -= this.jumpStrength;
                 protagonist.jumping = true
-                protagonist.onGround = false; 
-                break; 
+                protagonist.onGround = false;
+                break;
             case "down":
                 protagonist.yv += this.jumpStrength;
                 protagonist.jumping = true
-                protagonist.onGround = false; 
-                break; 
+                protagonist.onGround = false;
+                break;
             case "left":
                 protagonist.xv -= this.jumpStrength;
                 protagonist.jumping = true
-                protagonist.onGround = false; 
+                protagonist.onGround = false;
                 break;
             case "right":
                 protagonist.xv += this.jumpStrength;
                 protagonist.jumping = true
-                protagonist.onGround = false; 
-            default :
+                protagonist.onGround = false;
+            default:
                 return
         }
 
         return
     }
- 
+
     update = (gravityDirection, gravOpposite, protagonist) => {
+        //EXPERIMENTAL CODE
+        Object.values(this.keyCodeMap).forEach(key => {
+            this.controlMap[key] = this.liveKeyMap[key];
+        });
+
         if (this.keyPressedBool) {
 
             if (this.keyPressed.includes(gravityDirection)) {
@@ -84,60 +168,26 @@ export class ControlsManager{
             }
 
             if (this.keyPressed.includes(gravOpposite) && !protagonist.isJumping) {
-                protagonist.maxJumpDeltaTimeAccumulator += deltaTime; 
+                protagonist.maxJumpDeltaTimeAccumulator += deltaTime;
 
                 if (protagonist.maxJumpDeltaTimeAccumulator < protagonist.maxJumpDeltaTimeLimit) {
-                    this.jump(gravityDirection, gravOpposite, protagonist); 
+                    this.jump(gravityDirection, gravOpposite, protagonist);
                 }
             }
-            
+
             if (this.keyPressed.includes(this.state.lateralDirections.a) || this.keyPressed.includes(this.state.lateralDirections.b)) {
-                this.moveLaterally(gravityDirection, gravOpposite, protagonist); 
+                this.moveLaterally(gravityDirection, gravOpposite, protagonist);
             }
         }
     }
-  }
+}
 
 
 
 //JP'S CODE, MIGRATE TO THIS
-// export const keyCodeMap = {
-//     37: 'left',
-//     38: 'up',
-//     39: 'right',
-//     40: 'down',
-// }
 // export class ControlsManager {
 //     constructor() {
 
-//         this.controlMap = {
-//             up: false,
-//             down: false,
-//             left: false,
-//             right: false,
-//         };
 
-//         this.liveKeyMap = {};
 
-//         window.keyPressed = this.keyPressed.bind(this);
-//         window.keyReleased = this.keyReleased.bind(this);
-//     }
-
-//     update() {
-//         Object.values(keyCodeMap).forEach(key => {
-//             this.controlMap[key] = this.liveKeyMap[key];
-//         });
-//     }
-
-//     keyPressed() {
-//         if (keyCodeMap[keyCode]) {
-//             this.liveKeyMap[keyCodeMap[keyCode]] = true;
-//         }
-//     }
-
-//     keyReleased() {
-//         if (keyCodeMap[keyCode]) {
-//             this.liveKeyMap[keyCodeMap[keyCode]] = false;
-//         }
-//     }
 // }
