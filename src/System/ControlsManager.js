@@ -146,7 +146,13 @@ export class ControlsManager {
         return
     }
 
-    update = (gravityDirection, gravOpposite, protagonist) => {
+    update = (/*gravityDirection, gravOpposite, protagonist*/) => {
+        let pe = window.jlSystem.physicsEngine; 
+        let gravityDirection = pe.gravityDirection; 
+        let gravOpposite = pe.gravOpposite; 
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+
+
         //This is the part that updates what buttons  are actually pressed. 
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];

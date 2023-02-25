@@ -39,7 +39,7 @@ export default class Game {
     }
 
     updateControls = () => {
-        this.controls.update(this.physicsEngine.gravityDirection, this.physicsEngine.gravOpposite, this.protagonist);
+        this.controls.update(/*this.physicsEngine.gravityDirection, this.physicsEngine.gravOpposite, this.protagonist*/);
     }
 
     init = () => {
