@@ -172,13 +172,3 @@ export class ControlsManager {
         }
     }
 }
-
-
-
-//JP'S CODE, MIGRATE TO THIS
-// export class ControlsManager {
-
-
-
-
-// }
