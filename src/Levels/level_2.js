@@ -1,4 +1,8 @@
-class level_2 extends Level {
+import { Level } from "../ObjectClasses/Level.js";
+import { WallFloor } from "../GameAssets/WallFloor.js";
+import { Box } from "../GameAssets/Box.js"; 
+
+export class Level_2 extends Level {
     constructor(protagonist, physicsEngine, fillColor, strokeColor) {
       super();
       this.wallFloorFillColor = fillColor; 
@@ -26,7 +30,7 @@ class level_2 extends Level {
     createRandomBoxes = () => {
       let randomBoxArr = [];
     //   let numOfBoxes = random();
-      let numOfBoxes = 2; 
+      let numOfBoxes = 4; 
 
       for (let i = 0; i < numOfBoxes; i++) {
         let box = new Box (

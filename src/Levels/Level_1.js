@@ -63,6 +63,9 @@ export class Level_1 extends Level {
     init = () => {
       this.outerBoundriesArr = this.createOuterBoundries();
       this.boxesArr = this.createRandomBoxes();
+
+      this.outerBoundriesArr.forEach(b => console.log(b));
+      this.boxesArr.forEach(b => console.log(b));
     }
   
     update = () => {

@@ -13,11 +13,13 @@ export class WallFloor extends NonProtagonistGameObject {
       this.rightSide = this.x + this.w;
     
       this.id = `WF-idNum${idNum}`; 
+      this.type = "wallFloor"; 
     }
   
     draw = () => {
       stroke(this.strokeColor); 
       fill(this.fillColor);
       rect(this.x, this.y, this.w, this.h)
+      // console.log("WallFloor.draw()")
     }
   }

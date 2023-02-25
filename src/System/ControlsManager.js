@@ -9,10 +9,8 @@ export class ControlsManager {
         // this.lateralMovementV = 1; 
 
         // this goes in protagonist
-        this.jumpStrength = 3;
+        this.jumpStrength = 3.5;
 
-
-        //EXPERIMENTAL CODE
         this.keyCodeMap = {
             37: 'left',
             38: 'up',
@@ -20,7 +18,6 @@ export class ControlsManager {
             40: 'down',
         }
 
-        //EXPERIMENTAL CODE
         this.controlMap = {
             up: false,
             down: false,
@@ -32,13 +29,8 @@ export class ControlsManager {
 
         window.keyPressed = this.keyIsPressed.bind(this);
         window.keyReleased = this.keyIsReleased.bind(this);
-
-
-
     }
 
-
-    //EXPERIMENTAL CODE
     keyIsPressed = () => {
         if (this.keyCodeMap[keyCode]) {
             this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
@@ -57,12 +49,9 @@ export class ControlsManager {
             this.keyPressed.push("right");
         }
 
-
-
         this.keyPressedBool = true;
     }
 
-    //EXPERIMENTAL CODE
     keyIsReleased = () => {
         if (this.keyCodeMap[keyCode]) {
             this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
@@ -70,21 +59,23 @@ export class ControlsManager {
 
         if (keyCode === 38) { // up
             let indexOfDir = this.keyPressed.indexOf("up");
-            this.keyPressed.splice(indexOfDir, 1);  
-          }   
-          if (keyCode === 40) { // down
+            this.keyPressed.splice(indexOfDir, 1);
+        }
+
+        if (keyCode === 40) { // down
             let indexOfDir = this.keyPressed.indexOf("down");
             this.keyPressed.splice(indexOfDir, 1);
-          }     
-          if (keyCode === 37) { // left ; 
-            let indexOfDir = this.keyPressed.indexOf("left");
-            this.keyPressed.splice(indexOfDir, 1); 
-          } 
-          if (keyCode === 39) { // right 
-            let indexOfDir = this.keyPressed.indexOf("right");
-            this.keyPressed.splice(indexOfDir, 1); 
-          }
+        }
 
+        if (keyCode === 37) { // left ; 
+            let indexOfDir = this.keyPressed.indexOf("left");
+            this.keyPressed.splice(indexOfDir, 1);
+        }
+
+        if (keyCode === 39) { // right 
+            let indexOfDir = this.keyPressed.indexOf("right");
+            this.keyPressed.splice(indexOfDir, 1);
+        }
 
         if (this.keyPressed.length === 0) {
             this.keyPressedBool = false;
@@ -156,7 +147,7 @@ export class ControlsManager {
     }
 
     update = (gravityDirection, gravOpposite, protagonist) => {
-        //EXPERIMENTAL CODE
+        //This is the part that updates what buttons  are actually pressed. 
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
         });
@@ -186,7 +177,7 @@ export class ControlsManager {
 
 //JP'S CODE, MIGRATE TO THIS
 // export class ControlsManager {
-//     constructor() {
+
 
 
 

@@ -1,34 +1,50 @@
 {
-    "player": {
+    "protagonist": {
         "id": "Protagonist",
-        "x": 0,
-        "y": 0,
-        "width": 10,
-        "height": 10,
+        "x": 400,
+        "y": 600,
+        "w": 50,
+        "h": 50,
         "gravityDirection": "down",
-        "fillColor": "#000000",
-        "strokeColor": "#000000"
+        "fillColor": "#0247FE",
+        "strokeColor": "white"
     },
-    "boxes": [
-        {
-            "id": "WF-idNum-1",
-            "x": 10,
-            "y": 10,
-            "width": 10,
-            "height": 10,
-            "fillColor": "#000000",
-            "strokeColor": "#000000"
-        }
-    ],
     "wallFloors": [
         {
             "id": "WF-idNum-1",
             "x": 0,
             "y": 0,
-            "width": 10,
-            "height": 10,
-            "fillColor": "#000000",
-            "strokeColor": "#000000"
+            "w": 780,
+            "h": 20,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-2",
+            "x": 780,
+            "y": 0,
+            "w": 20,
+            "h": 780,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-3",
+            "x": 20,
+            "y": 780,
+            "w": 780,
+            "h": 20,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-4",
+            "x": 0,
+            "y": 20,
+            "w": 20,
+            "h": 780,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
         }
     ]
 }

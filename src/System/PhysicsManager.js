@@ -2,7 +2,7 @@ export class PhysicsManager {
     constructor(state, colorObject) {
 
 
-        this.state = state;
+        // this.state = state;
         this.colorObject = colorObject; 
 
         this.gravityStrength = 1.5;
@@ -13,11 +13,6 @@ export class PhysicsManager {
 
     returnState = () => {
         return this.state;
-    }
-
-    applyFrictionToObject = (object) => {
-        object.xv *= 0.9;
-        object.yv *= 0.9;
     }
 
     applyGravityToObject = (object) => {
@@ -39,6 +34,40 @@ export class PhysicsManager {
                     break;
             }
         }
+    }
+
+    applyGravityToProtagonist = () => {
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+
+        if (!protagonist.onGround) {
+            switch (this.gravityDirection) {
+                case "up":
+                    protagonist.yv -= this.gravityStrength;
+                    break;
+                case "down":
+                    protagonist.yv += this.gravityStrength;
+                    break;
+                case "left":
+                    protagonist.xv -= this.gravityStrength;
+                    break;
+                case "right":
+                    protagonist.xv += this.gravityStrength;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    applyFrictionToObject = () => {
+        object.xv *= 0.9;
+        object.yv *= 0.9;
+    }
+
+    applyFrictionToProtagonist = () => {
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+        protagonist.xv *= 0.9;
+        protagonist.yv *= 0.9;
     }
 
     determineDirectionOfCollision = (obj1, obj2) => {
@@ -99,6 +128,7 @@ export class PhysicsManager {
     }
 
     collisionDetection = (obj1, obj2) => {
+        // console.log("cd()")
         let didCollideBool = (
             obj1.x <= obj2.x + obj2.w &&
             obj1.x + obj1.w >= obj2.x &&
@@ -107,7 +137,7 @@ export class PhysicsManager {
         )
 
         if (didCollideBool) {
-            return true;
+        return true;
         }
 
         return false;
@@ -179,44 +209,51 @@ export class PhysicsManager {
     }
 
     //eventually I need to simplify this and make one loop that goes through all boxes and boundries 
-    metaCollisionDetectionForProtagonist = (protagonist, boundries, boxes) => {
+    metaCollisionDetectionForProtagonist = () => {
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+        let boundries = window.jlSystem.gameObjectManager.getBoundriesArr(); 
+        let state = window.jlSystem.state; 
+        let boxes = []; 
         let boundriesCurrentlyTouchingProtagonistIDArr = []
 
         //boundries loop
         for (let i = 0; i < boundries.length; i++) {
             let boundry = boundries[i];
 
+            // console.log(boundry); 
+            // console.log(protagonist); 
+
             //This conditional decides if the collision handler needs to be called and sets state
             if (this.collisionDetection(protagonist, boundry) && !boundry.isCurrentlyTouchingProtagonistBool) {
-                this.state.objectsCurrentlyTouchingProtagonist.push(boundry)
-                this.state.objectsCurrentlyTouchingProtagonistIdArr.push(boundry.id)
+                state.objectsCurrentlyTouchingProtagonist.push(boundry)
+                state.objectsCurrentlyTouchingProtagonistIdArr.push(boundry.id)
                 boundry.isCurrentlyTouchingProtagonistBool = true;
 
                 let collisionDirection = this.determineDirectionOfCollision(protagonist, boundry);
                 boundry.touchingFromWhichDirection = collisionDirection;
 
                 //this conditional checks if the protagonist is in a corner
-                if (this.state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
+                if (state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
                     protagonist.inCorner = true;
                 }
 
                 boundry.hasTouchedProtagonistBool = true; 
                 boundry.fillColor = this.colorObject.returnQuaternaryColor(); 
 
-                // console.log(this.state.protagonist.inCorner);
+                // console.log(state.protagonist.inCorner);
                 this.collisionHandlerForProtagonist(protagonist, boundry, collisionDirection);
             };
 
             //this conditional is garbage collection, removing boundries that are no longer touching protag from objectsCurrentlyTouchingProtag
             if (!this.collisionDetection(protagonist, boundry) && boundry.isCurrentlyTouchingProtagonistBool) {
-                let boundryIndex = this.state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(boundry.id);
-                this.state.objectsCurrentlyTouchingProtagonist.splice(boundryIndex, 1);
-                this.state.objectsCurrentlyTouchingProtagonistIdArr.splice(boundryIndex, 1);
+                let boundryIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(boundry.id);
+                state.objectsCurrentlyTouchingProtagonist.splice(boundryIndex, 1);
+                state.objectsCurrentlyTouchingProtagonistIdArr.splice(boundryIndex, 1);
                 boundry.isCurrentlyTouchingProtagonistBool = false;
                 boundry.touchingFromWhichDirection = null;
             }
 
-            if (this.state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
+            if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
                 protagonist.inCorner = false;
                 this.exitCorner();
             }
@@ -228,15 +265,15 @@ export class PhysicsManager {
 
             //This conditional decides if the collision handler needs to be called and sets state
             if (this.collisionDetection(protagonist, box) && !box.isCurrentlyTouchingProtagonistBool) {
-                this.state.objectsCurrentlyTouchingProtagonist.push(box)
-                this.state.objectsCurrentlyTouchingProtagonistIdArr.push(box.id)
+                state.objectsCurrentlyTouchingProtagonist.push(box)
+                state.objectsCurrentlyTouchingProtagonistIdArr.push(box.id)
                 box.isCurrentlyTouchingProtagonistBool = true;
 
                 let collisionDirection = this.determineDirectionOfCollision(protagonist, box);
                 box.touchingFromWhichDirection = collisionDirection;
 
                 //this conditional checks if the protagonist is in a corner
-                if (this.state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
+                if (state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
                     protagonist.inCorner = true;
                 }
 
@@ -248,18 +285,18 @@ export class PhysicsManager {
 
             //this conditional is garbage collection, removing boxes that are no longer touching protag from objectsCurrentlyTouchingProtag
             if (!this.collisionDetection(protagonist, box) && box.isCurrentlyTouchingProtagonistBool) {
-                let boxIndex = this.state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(box.id);
-                this.state.objectsCurrentlyTouchingProtagonist.splice(boxIndex, 1);
-                this.state.objectsCurrentlyTouchingProtagonistIdArr.splice(boxIndex, 1);
+                let boxIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(box.id);
+                state.objectsCurrentlyTouchingProtagonist.splice(boxIndex, 1);
+                state.objectsCurrentlyTouchingProtagonistIdArr.splice(boxIndex, 1);
                 box.isCurrentlyTouchingProtagonistBool = false;
                 box.touchingFromWhichDirection = null;
             }
 
-            if (this.state.objectsCurrentlyTouchingProtagonist.length === 0) {
+            if (state.objectsCurrentlyTouchingProtagonist.length === 0) {
                 protagonist.onGround = false; 
             }
 
-            if (this.state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
+            if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
                 protagonist.inCorner = false;
                 this.exitCorner();
             }
@@ -267,6 +304,7 @@ export class PhysicsManager {
     }
 
     collisionHandlerForProtagonist = (protagonist, obj2, collisionDirection) => {
+
         if (protagonist.inCorner) {
             let directionsOfObjectsArr = [];
             let corner;
