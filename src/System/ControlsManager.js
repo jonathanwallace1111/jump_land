@@ -1,7 +1,5 @@
 export class ControlsManager {
-    constructor(state) {
-
-        this.state = state;
+    constructor() {
 
         this.keyPressedBool = false;
         this.keyPressed = [];
@@ -83,34 +81,32 @@ export class ControlsManager {
     }
 
     moveLaterally = (gravityDirection, gravOpposite, protagonist) => {
-        let latDirAPressedBool = this.keyPressed.includes(this.state.lateralDirections.a);
-        let latDirBPressedBool = this.keyPressed.includes(this.state.lateralDirections.b);
+        let state = window.jlSystem.state; 
+
+        let latDirAPressedBool = this.keyPressed.includes(state.lateralDirections.a);
+        let latDirBPressedBool = this.keyPressed.includes(state.lateralDirections.b);
 
         let latDirToMove = null;
 
         if (latDirAPressedBool && latDirBPressedBool) {
             return;
         } else if (latDirAPressedBool) {
-            latDirToMove = this.state.lateralDirections.a;
+            latDirToMove = state.lateralDirections.a;
         } else if (latDirBPressedBool) {
-            latDirToMove = this.state.lateralDirections.b;
+            latDirToMove = state.lateralDirections.b;
         }
 
         switch (latDirToMove) {
             case "up":
-                // protagonist.addAccelerationToVelocity();
                 protagonist.yv -= protagonist.currentVAbs;
                 break;
             case "down":
-                // protagonist.addAccelerationToVelocity();
                 protagonist.yv += protagonist.currentVAbs;
                 break;
             case "left":
-                // protagonist.addAccelerationToVelocity();
                 protagonist.xv -= protagonist.currentVAbs;
                 break;
             case "right":
-                // protagonist.addAccelerationToVelocity();
                 protagonist.xv += protagonist.currentVAbs;
                 break;
             default:
@@ -146,8 +142,9 @@ export class ControlsManager {
         return
     }
 
-    update = (/*gravityDirection, gravOpposite, protagonist*/) => {
-        let pe = window.jlSystem.physicsEngine; 
+    update = () => {
+        let pe = window.jlSystem.physicsEngine;
+        let state = window.jlSystem.state;  
         let gravityDirection = pe.gravityDirection; 
         let gravOpposite = pe.gravOpposite; 
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
@@ -172,9 +169,12 @@ export class ControlsManager {
                 }
             }
 
-            if (this.keyPressed.includes(this.state.lateralDirections.a) || this.keyPressed.includes(this.state.lateralDirections.b)) {
+            if (this.keyPressed.includes(state.lateralDirections.a) || this.keyPressed.includes(state.lateralDirections.b)) {
                 this.moveLaterally(gravityDirection, gravOpposite, protagonist);
             }
         }
+   
+        protagonist.x += protagonist.xv;
+        protagonist.y += protagonist.yv;
     }
 }

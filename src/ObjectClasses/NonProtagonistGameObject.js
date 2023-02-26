@@ -8,4 +8,9 @@ export class NonProtagonistGameObject extends PhysicalGameObject {
         this.isCurrentlyTouchingProtagonistBool = false; 
         this.touchingFromWhichDirection = null; 
     }
+
+    touchProtagonist() { 
+        // this.hasTouchedProtagonistBool = true; 
+        // console.log(this.hasTouchedProtagonistBool); 
+    }
 }

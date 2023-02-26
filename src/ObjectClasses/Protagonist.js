@@ -1,20 +1,15 @@
+import { ColorObject } from "../System/ColorObject.js";
 import { PhysicalGameObject } from "./PhysicalGameObject.js";
 import { NonProtagonistGameObject } from "./NonProtagonistGameObject.js";
 
 export class Protagonist extends PhysicalGameObject {
-  constructor(x, y, w, h, gravityDirection, fillColor, strokeColor) {
+  constructor(x, y, w, h) {
     super(x, y, w, h);
-
-    this.top = this.y;
-    this.bottom = this.y + this.h;
-    this.leftSide = this.x;
-    this.rightSide = this.x + this.w;
-    this.fillColor = fillColor;
-    this.strokeColor = strokeColor;
-
+    
+    //I need to consolidate these three properties
     this.id = "Protagonist"; 
-
     this.isProtagonist = true;
+    this.protagonistBool = true;
 
     this.spawnBox = new NonProtagonistGameObject(
       this.x - (this.w / 2),
@@ -27,7 +22,6 @@ export class Protagonist extends PhysicalGameObject {
     this.currentVAbs = .8;
     this.maxLateralVelocity = 1;
 
-    this.gravityDirection = gravityDirection;
     this.xv = 0;
     this.yv = 0;
 
@@ -37,59 +31,19 @@ export class Protagonist extends PhysicalGameObject {
 
     this.onGround = false;
 
-    this.protagonistBool = true;
-    this.touchingProtagonistBool = undefined;
-  }
-
-  applyGravity = () => {
-
-  }
-
-  applyPhysics = () => {
-
-  }
-
-  setPhysicsVariables = () => {
-    this.top = this.y;
-    this.bottom = this.y + this.h;
-    this.leftSide = this.x;
-    this.rightSide = this.x + this.w;
-  }
-
-  applyControllerInput = (controllerInput) => {
-
-  }
-
-  moveProtagonist = (controllerInput) => {
-    this.applyControllerInput(controllerInput);
-
+    this.colorObject = new ColorObject(); 
+    this.strokeColor = this.colorObject.strokeColor;
+    this.fillColor = this.colorObject.protagonistFillColor;
   }
 
   update = () => {
-    this.moveProtagonist();
-    this.setPhysicsVariables();
-    // if (this.currentVAbs < this.acceleration) {
-    //   this.acceleration = this.currentVAbs; 
-    // }
-  }
 
-  //eventually I want to move the jump function here
-  moveLaterally = () => {
-
-  }
-
-  addAccelerationToVelocity = () => {
-    this.currentVAbs += this.acceleration;
-    if (this.currentVAbs > this.maxLateralVelocity) {
-      this.currentVAbs = this.maxLateralVelocity;
-    }
   }
 
   draw = () => {
     stroke(this.strokeColor);
     fill(this.fillColor);
     rect(this.x, this.y, this.w, this.h);
-    // console.log(this)
   }
 }
 

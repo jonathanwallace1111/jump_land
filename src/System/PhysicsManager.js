@@ -1,18 +1,9 @@
 export class PhysicsManager {
-    constructor(state, colorObject) {
-
-
-        // this.state = state;
-        this.colorObject = colorObject; 
-
+    constructor() {
         this.gravityStrength = 1.5;
         this.gravityDirection = "down";
 
         this.gravOpposite = "up";
-    }
-
-    returnState = () => {
-        return this.state;
     }
 
     applyGravityToObject = (object) => {
@@ -144,31 +135,33 @@ export class PhysicsManager {
     }
 
     assignLateralDirections = (corner = false) => {
+        let state = window.jlSystem.state; 
+
         if (!corner) {
             if (this.gravityDirection === "up" || this.gravityDirection === "down") {
-                this.state.lateralDirections.a = "left";
-                this.state.lateralDirections.b = "right";
+                state.lateralDirections.a = "left";
+                state.lateralDirections.b = "right";
             } else if (this.gravityDirection === "left" || this.gravityDirection === "right") {
-                this.state.lateralDirections.a = "up";
-                this.state.lateralDirections.b = "down";
+                state.lateralDirections.a = "up";
+                state.lateralDirections.b = "down";
             }
         } else {
             switch (corner) {
                 case "lu":
-                    this.state.lateralDirections.a = "right";
-                    this.state.lateralDirections.b = "down";
+                    state.lateralDirections.a = "right";
+                    state.lateralDirections.b = "down";
                     break;
                 case "ur":
-                    this.state.lateralDirections.a = "down";
-                    this.state.lateralDirections.b = "left";
+                    state.lateralDirections.a = "down";
+                    state.lateralDirections.b = "left";
                     break;
                 case "rd":
-                    this.state.lateralDirections.a = "left";
-                    this.state.lateralDirections.b = "up";
+                    state.lateralDirections.a = "left";
+                    state.lateralDirections.b = "up";
                     break;
                 case "dl":
-                    this.state.lateralDirections.a = "up";
-                    this.state.lateralDirections.b = "right";
+                    state.lateralDirections.a = "up";
+                    state.lateralDirections.b = "right";
                     break;
                 default:
                     break;
@@ -201,8 +194,9 @@ export class PhysicsManager {
     }
 
     exitCorner = () => {
-        if (this.state.objectsCurrentlyTouchingProtagonist.length === 1) {
-            let obj = this.state.objectsCurrentlyTouchingProtagonist[0];
+        let state = window.jlSystem.state; 
+        if (state.objectsCurrentlyTouchingProtagonist.length === 1) {
+            let obj = state.objectsCurrentlyTouchingProtagonist[0];
             this.changeGravityDirection(obj.touchingFromWhichDirection);
             this.assignLateralDirections();
         }
@@ -237,10 +231,8 @@ export class PhysicsManager {
                     protagonist.inCorner = true;
                 }
 
-                boundry.hasTouchedProtagonistBool = true; 
-                boundry.fillColor = this.colorObject.returnQuaternaryColor(); 
+                boundry.touchProtagonist(); 
 
-                // console.log(state.protagonist.inCorner);
                 this.collisionHandlerForProtagonist(protagonist, boundry, collisionDirection);
             };
 
@@ -277,8 +269,7 @@ export class PhysicsManager {
                     protagonist.inCorner = true;
                 }
 
-                box.hasTouchedProtagonistBool = true; 
-                box.fillColor = this.colorObject.returnQuaternaryColor();  
+                box.touchProtagonist(); 
 
                 this.collisionHandlerForProtagonist(protagonist, box, collisionDirection);
             };
@@ -304,13 +295,14 @@ export class PhysicsManager {
     }
 
     collisionHandlerForProtagonist = (protagonist, obj2, collisionDirection) => {
+        let state = window.jlSystem.state; 
 
         if (protagonist.inCorner) {
             let directionsOfObjectsArr = [];
             let corner;
 
-            for (let i = 0; i < this.state.objectsCurrentlyTouchingProtagonist.length; i++) {
-                let obj = this.state.objectsCurrentlyTouchingProtagonist[i];
+            for (let i = 0; i < state.objectsCurrentlyTouchingProtagonist.length; i++) {
+                let obj = state.objectsCurrentlyTouchingProtagonist[i];
                 directionsOfObjectsArr.push(obj.touchingFromWhichDirection);
             }
 
@@ -343,4 +335,11 @@ export class PhysicsManager {
         obj2.touchingProtagonistBool = true;
         protagonist.jumping = false;
     }
+
+    update = () => {
+        this.applyGravityToProtagonist(); 
+        this.applyFrictionToProtagonist(); 
+        this.metaCollisionDetectionForProtagonist(); 
+    }
 }
+

@@ -1,6 +1,11 @@
-  
+import { GameBackground } from "../GameAssets/GameBackground.js";
+import { ColorObject } from "./ColorObject.js";
+
 export class GameObjectManager {
     constructor() {
+
+        this.colorObject = new ColorObject(); 
+        this.background = new GameBackground(this.colorObject.backgroundColor); 
         this.gameObjects = [];
     }
 
@@ -8,16 +13,8 @@ export class GameObjectManager {
         this.gameObjects = [...this.gameObjects, ...objs];
     }
 
-    draw() {
-        this.gameObjects.forEach(gameObject => gameObject.draw());
-    }
-
     loadObject(obj) {
         this.gameObjects.push(obj);
-    }
-
-    update(dt) {
-        this.gameObjects.forEach(gameObject => gameObject.update(dt));
     }
 
     clearObjects = () => {
@@ -43,5 +40,15 @@ export class GameObjectManager {
 
 
         return this.gameObjects.filter(obj => obj.type === "wallFloor"); 
+    }
+
+    update(dt) {
+        this.background.update(); 
+        this.gameObjects.forEach(gameObject => gameObject.update(dt));
+    }
+
+    draw() {
+        this.background.draw(); 
+        this.gameObjects.forEach(gameObject => gameObject.draw());
     }
 }

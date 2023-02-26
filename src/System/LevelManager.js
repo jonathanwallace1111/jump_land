@@ -1,7 +1,7 @@
 // import LevelManifest from '../Levels';
-
 import { WallFloor } from "../GameAssets/WallFloor.js";
 import { Protagonist } from "../ObjectClasses/Protagonist.js";
+
 
 export class LevelManager {
     constructor() {
@@ -21,14 +21,10 @@ export class LevelManager {
             .then(data => {
                 this.level = data;
 
-                // console.log(this.level.protagonist); 
-
                 let newLevelObjects = [
-                    ...this.level.wallFloors.map(wall => new WallFloor(wall.x, wall.y, wall.w, wall.h, wall.id, wall.fillColor, wall.strokeColor)),
-                    new Protagonist(this.level.protagonist.x, this.level.protagonist.y, this.level.protagonist.w, this.level.protagonist.h, this.level.protagonist.gravityDirection, this.level.protagonist.fillColor, this.level.protagonist.strokeColor)
+                    ...this.level.wallFloors.map(wall => new WallFloor(wall.x, wall.y, wall.w, wall.h, wall.id)),
+                    new Protagonist(this.level.protagonist.x, this.level.protagonist.y, this.level.protagonist.w, this.level.protagonist.h)
                 ];
-
-                // console.log(newLevelObjects); 
 
                 gom.loadObjects(newLevelObjects);
             })
