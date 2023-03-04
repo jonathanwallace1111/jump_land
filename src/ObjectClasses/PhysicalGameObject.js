@@ -7,5 +7,10 @@ export class PhysicalGameObject extends GameObject {
         this.y = y; 
         this.w = w; 
         this.h = h; 
+
+        this.renderX = x; 
+        this.renderY = y; 
+        this.renderW = w; 
+        this.renderH = h; 
     }
 }

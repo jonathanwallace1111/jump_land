@@ -3,6 +3,8 @@ import { ControlsManager } from "./ControlsManager.js";
 import { PhysicsManager } from "./PhysicsManager.js";
 import { GameObjectManager } from "./GameObjectManager.js";
 import { LevelManager } from "./LevelManager.js";
+import { Camera } from "./Camera.js"; 
+import { RenderManager } from "./RenderManager.js";
 
 export default class Game {
     constructor() {
@@ -11,6 +13,8 @@ export default class Game {
         this.physicsEngine = new PhysicsManager();
         this.gameObjectManager = new GameObjectManager();
         this.levelManager = new LevelManager();
+        this.camera = new Camera(); 
+        this.renderManager = new RenderManager(); 
         window.jlSystem = this;
     }
 
@@ -27,10 +31,13 @@ export default class Game {
         this.updateControls();
         this.physicsEngine.update(); 
         this.gameObjectManager.update(this.state.deltaTime);
+        this.camera.updatePosition(); 
     }
 
     draw = () => {
-        this.gameObjectManager.draw();
+
+        this.renderManager.draw(); 
+        // this.gameObjectManager.draw();
     }
 
     gameLoop = () => {

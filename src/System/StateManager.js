@@ -21,6 +21,8 @@ export class StateManager {
         this.protagonist = {
             inCorner: false 
         }
+
+        this.levelMetaData = {}; 
     }
 
     updateDeltaTime = () => {

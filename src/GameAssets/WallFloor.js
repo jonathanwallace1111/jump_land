@@ -26,6 +26,7 @@ export class WallFloor extends NonProtagonistGameObject {
     draw = () => {
       stroke(this.strokeColor); 
       fill(this.fillColor);
-      rect(this.x, this.y, this.w, this.h)
+      // rect(this.x, this.y, this.w, this.h); 
+      rect(this.renderX, this.renderY, this.renderW, this.renderH); 
     }
   }

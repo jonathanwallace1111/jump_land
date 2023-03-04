@@ -48,7 +48,7 @@ export class GameObjectManager {
     }
 
     draw() {
-        this.background.draw(); 
-        this.gameObjects.forEach(gameObject => gameObject.draw());
+        // this.background.draw(); 
+        // this.gameObjects.forEach(gameObject => gameObject.draw());
     }
 }

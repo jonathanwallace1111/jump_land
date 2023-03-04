@@ -1,0 +1,54 @@
+{
+    "levelMetaData": {
+        "w": 2000, 
+        "h": 800
+    },
+    "protagonist": {
+        "id": "Protagonist",
+        "x": 400,
+        "y": 600,
+        "w": 50,
+        "h": 50,
+        "gravityDirection": "down",
+        "fillColor": "#0247FE",
+        "strokeColor": "white"
+    },
+    "wallFloors": [
+        {
+            "id": "WF-idNum-1",
+            "x": 0,
+            "y": 0,
+            "w": 2000,
+            "h": 20,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-2",
+            "x": 2000,
+            "y": 0,
+            "w": 20,
+            "h": 780,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-3",
+            "x": 20,
+            "y": 780,
+            "w": 2000,
+            "h": 20,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        },
+        {
+            "id": "WF-idNum-4",
+            "x": 0,
+            "y": 20,
+            "w": 20,
+            "h": 780,
+            "fillColor": "#FE2712",
+            "strokeColor": "white"
+        }
+    ]
+}

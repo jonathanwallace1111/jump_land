@@ -16,10 +16,12 @@ export class LevelManager {
         //let level = LevelManifest[levelNumber];
 
         //Used "fetch" because of MIME issues 
-        fetch("./Levels/level_1.json")
+        fetch("./Levels/level_2.json")
             .then(response => response.json())
             .then(data => {
                 this.level = data;
+
+                window.jlSystem.state.levelMetaData = this.level.levelMetaData; 
 
                 let newLevelObjects = [
                     ...this.level.wallFloors.map(wall => new WallFloor(wall.x, wall.y, wall.w, wall.h, wall.id)),
