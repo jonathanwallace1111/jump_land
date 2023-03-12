@@ -26,5 +26,12 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jonathanwallace1111/jump_land.git"
+  },
+  "keywords": [
+    "game"
+  ]
 }

@@ -23,6 +23,8 @@ export class StateManager {
         }
 
         this.levelMetaData = {}; 
+
+        this.selectedObject = undefined; 
     }
 
     updateDeltaTime = () => {

@@ -1,8 +1,7 @@
+// import { Camera } from "./Camera";
+
 export class ControlsManager {
     constructor() {
-
-        this.keyPressedBool = false;
-        this.keyPressed = [];
 
         // this.lateralMovementV = 1; 
 
@@ -25,66 +24,54 @@ export class ControlsManager {
 
         this.liveKeyMap = {};
 
+        window.mousePressed = this.mouseIsPressed.bind(this); 
+        window.mouseDragged = this.mouseIsDragged.bind(this); 
+
         window.keyPressed = this.keyIsPressed.bind(this);
         window.keyReleased = this.keyIsReleased.bind(this);
+    }
+
+    mouseIsPressed = () => { 
+        let objArr = window.jlSystem.gameObjectManager.gameObjects; 
+        let state = window.jlSystem.state; 
+
+        state.selectedObject = objArr.find(obj => {
+            return(mouseX <= obj.renderX + obj.w &&
+            mouseX >= obj.renderX &&
+            mouseY <= obj.renderY + obj.h &&
+            mouseY >= obj.renderY); 
+        })
+
+        console.log(state.selectedObject); 
+    }
+
+    mouseIsDragged = () => {
+        let selectedObject = window.jlSystem.state.selectedObject; 
+        let camera = window.jlSystem.camera; 
+
+        selectedObject.x = mouseX - camera.x; 
+        selectedObject.y = mouseY - camera.y
+        
+
     }
 
     keyIsPressed = () => {
         if (this.keyCodeMap[keyCode]) {
             this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
         }
-
-        if (keyCode === 38) { // up
-            this.keyPressed.push("up");
-        }
-        if (keyCode === 40) { // down 
-            this.keyPressed.push("down");
-        }
-        if (keyCode === 37) { // left 
-            this.keyPressed.push("left");
-        }
-        if (keyCode === 39) { // right 
-            this.keyPressed.push("right");
-        }
-
-        this.keyPressedBool = true;
     }
 
     keyIsReleased = () => {
         if (this.keyCodeMap[keyCode]) {
             this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
         }
-
-        if (keyCode === 38) { // up
-            let indexOfDir = this.keyPressed.indexOf("up");
-            this.keyPressed.splice(indexOfDir, 1);
-        }
-
-        if (keyCode === 40) { // down
-            let indexOfDir = this.keyPressed.indexOf("down");
-            this.keyPressed.splice(indexOfDir, 1);
-        }
-
-        if (keyCode === 37) { // left ; 
-            let indexOfDir = this.keyPressed.indexOf("left");
-            this.keyPressed.splice(indexOfDir, 1);
-        }
-
-        if (keyCode === 39) { // right 
-            let indexOfDir = this.keyPressed.indexOf("right");
-            this.keyPressed.splice(indexOfDir, 1);
-        }
-
-        if (this.keyPressed.length === 0) {
-            this.keyPressedBool = false;
-        }
     }
 
     moveLaterally = (gravityDirection, gravOpposite, protagonist) => {
         let state = window.jlSystem.state; 
 
-        let latDirAPressedBool = this.keyPressed.includes(state.lateralDirections.a);
-        let latDirBPressedBool = this.keyPressed.includes(state.lateralDirections.b);
+        let latDirAPressedBool = this.liveKeyMap[state.lateralDirections.a]; 
+        let latDirBPressedBool = this.liveKeyMap[state.lateralDirections.b];
 
         let latDirToMove = null;
 
@@ -155,13 +142,12 @@ export class ControlsManager {
             this.controlMap[key] = this.liveKeyMap[key];
         });
 
-        if (this.keyPressedBool) {
 
-            if (this.keyPressed.includes(gravityDirection)) {
+            if (this.liveKeyMap[gravityDirection]) {
 
             }
 
-            if (this.keyPressed.includes(gravOpposite) && !protagonist.isJumping) {
+            if (this.liveKeyMap[gravOpposite] && !protagonist.isJumping) {
                 protagonist.maxJumpDeltaTimeAccumulator += deltaTime;
 
                 if (protagonist.maxJumpDeltaTimeAccumulator < protagonist.maxJumpDeltaTimeLimit) {
@@ -169,11 +155,11 @@ export class ControlsManager {
                 }
             }
 
-            if (this.keyPressed.includes(state.lateralDirections.a) || this.keyPressed.includes(state.lateralDirections.b)) {
+            if (this.liveKeyMap[state.lateralDirections.a] || this.liveKeyMap[state.lateralDirections.b]) {
+
                 this.moveLaterally(gravityDirection, gravOpposite, protagonist);
             }
-        }
-   
+
         protagonist.x += protagonist.xv;
         protagonist.y += protagonist.yv;
     }
