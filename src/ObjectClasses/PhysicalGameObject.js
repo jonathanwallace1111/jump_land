@@ -2,7 +2,7 @@ import { GameObject } from "./GameObject.js";
 import { Vector } from "../Utilities/Vector.js"; 
 
 export class PhysicalGameObject extends GameObject { 
-    constructor(x, y, w, h) {
+    constructor(x, y, w=0, h=0) {
         super(); 
         this.pos = new Vector(x, y); 
         // this.x = x; 

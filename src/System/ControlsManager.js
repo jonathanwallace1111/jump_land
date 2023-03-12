@@ -1,4 +1,12 @@
 // import { Camera } from "./Camera";
+import { SmallBox } from "../GameAssets/SmallBox.js"; 
+import { MediumBox } from "../GameAssets/MediumBox.js"; 
+import { LargeBox } from "../GameAssets/LargeBox.js";
+import { SmallPlatform } from "../GameAssets/SmallPlatform.js"; 
+import { MediumPlatform } from "../GameAssets/MediumPlatform.js";  
+import { LargePlatform } from "../GameAssets/LargePlatform.js";  
+
+
 
 export class ControlsManager {
     constructor() {
@@ -8,6 +16,15 @@ export class ControlsManager {
             38: 'up',
             39: 'right',
             40: 'down',
+            81: 'q', 
+            87: 'w', 
+            69: 'e',
+            65: 'a',
+            83: 's',
+            68: 'd',  
+            90: 'z', 
+            88: 'x', 
+            67: 'c',   
         }
 
         this.controlMap = {
@@ -15,9 +32,32 @@ export class ControlsManager {
             down: false,
             left: false,
             right: false,
+            q: false, 
+            w: false, 
+            e: false,
+            a: false,
+            s: false, 
+            d: false, 
+            z: false, 
+            x: false, 
+            c: false, 
         };
 
-        this.liveKeyMap = {};
+        this.liveKeyMap = {
+            up: false,
+            down: false,
+            left: false,
+            right: false,
+            q: false, 
+            w: false, 
+            e: false,
+            a: false,
+            s: false, 
+            d: false, 
+            z: false, 
+            x: false, 
+            c: false, 
+        };
 
         window.mousePressed = this.mouseIsPressed.bind(this); 
         window.mouseDragged = this.mouseIsDragged.bind(this); 
@@ -31,10 +71,10 @@ export class ControlsManager {
         let state = window.jlSystem.state; 
 
         state.selectedObject = objArr.find(obj => {
-            return(mouseX <= obj.renderX + obj.w &&
-            mouseX >= obj.renderX &&
-            mouseY <= obj.renderY + obj.h &&
-            mouseY >= obj.renderY); 
+            return(mouseX <= obj.renderPos.x + obj.w &&
+            mouseX >= obj.renderPos.x &&
+            mouseY <= obj.renderPos.y + obj.h &&
+            mouseY >= obj.renderPos.y); 
         })
 
         console.log(state.selectedObject); 
@@ -46,9 +86,11 @@ export class ControlsManager {
         let camera = window.jlSystem.camera; 
         
         if (!!selectedObject) {
-            selectedObject.pos.x = mouseX - camera.x; 
-            selectedObject.pos.y = mouseY - camera.y
+            selectedObject.pos.x = mouseX + camera.pos.x; 
+            selectedObject.pos.y = mouseY + camera.pos.y; 
         }
+
+        console.log(selectedObject.pos); 
 
     }
 
@@ -135,6 +177,67 @@ export class ControlsManager {
         return
     }
 
+    levelBuilderUpdate = () => {
+        let camera = window.jlSystem.camera; 
+        let gameObjArr = window.jlSystem.gameObjectManager.gameObjects; 
+        let selectedObject = window.jlSystem.state.selectedObject; 
+
+        Object.values(this.keyCodeMap).forEach(key => {
+            this.controlMap[key] = this.liveKeyMap[key];
+        });
+
+
+        let cameraV = 6; 
+        if (this.liveKeyMap['up']) {
+            camera.pos.y -= cameraV; 
+        }   
+        if (this.liveKeyMap['down']) {
+            camera.pos.y += cameraV; 
+        }
+        if (this.liveKeyMap['left']) {
+            camera.pos.x -= cameraV; 
+        }
+        if (this.liveKeyMap['right']) {
+            camera.pos.x += cameraV; 
+        }
+
+        if (this.liveKeyMap['q']) {
+            gameObjArr.push(new SmallBox(400, 400));             
+        }
+        if (this.liveKeyMap['w']) {
+            gameObjArr.push(new MediumBox(400, 400));             
+        }
+        if (this.liveKeyMap['e']) {
+            gameObjArr.push(new LargeBox(400, 400));             
+        }
+
+        if (this.liveKeyMap['a']) {
+            gameObjArr.push(new SmallPlatform(400, 400)); 
+        }
+        if (this.liveKeyMap['s']) {
+            gameObjArr.push(new MediumPlatform(400, 400)); 
+        }
+        if (this.liveKeyMap['d']) {
+            gameObjArr.push(new LargePlatform(400, 400)); 
+        }
+
+        if (this.liveKeyMap['z']) {
+            let newW = selectedObject.h; 
+            let newH = selectedObject.w; 
+            selectedObject.w = newW; 
+            selectedObject.h = newH; 
+        }
+        if (this.liveKeyMap['x']) {
+            console.log(gameObjArr.JSON); 
+        }
+        if (this.liveKeyMap['c']) {
+            
+        }
+
+
+
+    }
+
     update = () => {
         let pe = window.jlSystem.physicsEngine;
         let state = window.jlSystem.state;  
@@ -142,8 +245,6 @@ export class ControlsManager {
         let gravOpposite = pe.gravOpposite; 
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
 
-
-        //This is the part that updates what buttons  are actually pressed. 
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
         });

@@ -6,6 +6,10 @@ export class Camera {
         this.scale = 1; 
     }
 
+    levelBuilderUpdate = () => {
+        //this is currently handled in ControlsManager.LevelBuilderUpdate
+    }
+
     updatePosition = () => { 
         let game = window.jlSystem; 
         let gom = game.gameObjectManager; 

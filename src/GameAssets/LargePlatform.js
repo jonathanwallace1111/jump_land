@@ -1,21 +1,23 @@
 import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObject.js";
 import { ColorObject } from "../System/ColorObject.js";
+import { Vector } from "../Utilities/Vector.js";
 
-export class LargePlatform extends NonProtagonistGameObject {
-    constructor(x, y, w, h, idNum) { 
-      super(x, y, w, h); 
+
+export class LargePlatform {
+    constructor(x, y) { 
+      
+      this.pos = new Vector(x, y); 
+      this.renderPos = new Vector(x, y); 
+
+
+      this.h = 300;
+      this.w = 20;  
+      
       
       this.colorObject = new ColorObject(); 
       this.fillColor = this.colorObject.untouchedObjectFillColor; 
       this.strokeColor = this.colorObject.strokeColor; 
 
-      this.top = y; 
-      this.bottom = this.y + this.h; 
-      this.leftSide = this.pos.x; 
-      this.rightSide = this.pos.x + this.w;
-    
-      this.id = `LP-idNum${idNum}`; 
-      this.type = "largePlatform"; 
     }
 
     touchProtagonist() { 
@@ -23,6 +25,10 @@ export class LargePlatform extends NonProtagonistGameObject {
       this.fillColor = this.colorObject.touchedObjectFillColor; 
   }
   
+  update = () => {
+      
+  }
+
     draw = () => {
       stroke(this.strokeColor); 
       fill(this.fillColor);

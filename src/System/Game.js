@@ -23,15 +23,25 @@ export default class Game {
     }
 
     updateControls = () => {
-        this.controls.update();
+        if (this.state.inLevelBuilderMode) {
+            this.controls.levelBuilderUpdate(); 
+        } else {
+            this.controls.update();
+        }
     }
 
     update = () => {
-        this.state.updateDeltaTime(); 
-        this.updateControls();
-        this.physicsEngine.update(); 
-        this.gameObjectManager.update(this.state.deltaTime);
-        this.camera.updatePosition(); 
+        if (this.state.inLevelBuilderMode) {
+            this.updateControls();
+            this.gameObjectManager.update(this.state.deltaTime);
+            this.camera.levelBuilderUpdate(); 
+        } else {
+            this.state.updateDeltaTime(); 
+            this.updateControls();
+            this.physicsEngine.update(); 
+            this.gameObjectManager.update(this.state.deltaTime);
+            this.camera.updatePosition(); 
+        }
     }
 
     draw = () => {

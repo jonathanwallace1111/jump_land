@@ -1,21 +1,29 @@
 import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObject.js";
 import { ColorObject } from "../System/ColorObject.js";
+import { Vector } from "../Utilities/Vector.js";
 
-export class Box extends NonProtagonistGameObject {
-    constructor(x, y, w, h, idNum, fillColor, strokeColor) {
-      super(x, y, w, h); 
-      this.colorObject = new ColorObject(); 
+export class SmallBox {
+  constructor(x, y) {
+
+    this.pos = new Vector(x, y); 
+    this.renderPos = new Vector(x, y); 
 
 
-      this.fillColor = this.colorObject.untouchedObjectFillColor; 
-      this.strokeColor = this.colorObject.strokeColor; 
+    this.w = 50; 
+    this.h = 50; 
 
-      this.id = `WF-idNum${idNum}`; 
-    }
+    this.colorObject = new ColorObject(); 
+    this.fillColor = this.colorObject.untouchedObjectFillColor; 
+    this.strokeColor = this.colorObject.strokeColor; 
+  }
   
     touchProtagonist() { 
       this.hasTouchedProtagonistBool = true; 
       this.fillColor = this.colorObject.touchedObjectFillColor; 
+    }
+
+    update = () => {
+
     }
 
     draw = () => {
