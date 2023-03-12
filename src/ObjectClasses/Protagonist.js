@@ -1,6 +1,7 @@
 import { ColorObject } from "../System/ColorObject.js";
 import { PhysicalGameObject } from "./PhysicalGameObject.js";
 import { NonProtagonistGameObject } from "./NonProtagonistGameObject.js";
+import { Vector } from "../Utilities/Vector.js"; 
 
 export class Protagonist extends PhysicalGameObject {
   constructor(x, y, w, h) {
@@ -12,8 +13,8 @@ export class Protagonist extends PhysicalGameObject {
     this.protagonistBool = true;
 
     this.spawnBox = new NonProtagonistGameObject(
-      this.x - (this.w / 2),
-      this.y - (this.h / 2),
+      this.pos.x - (this.w / 2),
+      this.pos.y - (this.h / 2),
       this.w + this.w,
       height - (this.y - (this.h / 2))
     )
@@ -23,8 +24,9 @@ export class Protagonist extends PhysicalGameObject {
     this.acceleration = .01
     this.maxLateralVelocity = 1;
 
-    this.xv = 0;
-    this.yv = 0;
+    this.velocity = new Vector(0, 0)
+    // this.xv = 0;
+    // this.yv = 0;
 
     this.isJumping = false;
     this.maxJumpDeltaTimeAccumulator = 0;
@@ -44,7 +46,7 @@ export class Protagonist extends PhysicalGameObject {
   draw = () => {
     stroke(this.strokeColor);
     fill(this.fillColor);
-    rect(this.renderX, this.renderY, this.renderW, this.renderH);
+    rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH);
   }
 }
 

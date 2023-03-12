@@ -9,8 +9,8 @@ export class RenderManager {
     let camera = window.jlSystem.camera; 
 
     gom.gameObjects.forEach(obj => {
-      obj.renderX = obj.x - camera.x; 
-      obj.renderY = obj.y - camera.y;  
+      obj.renderPos.x = obj.pos.x - camera.pos.x; 
+      obj.renderPos.y = obj.pos.y - camera.pos.y;  
   
 
 

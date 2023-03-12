@@ -1,8 +1,8 @@
+import { Vector } from "../Utilities/Vector.js";
 
 export class Camera {
     constructor() { 
-        this.x = 0;
-        this.y = 0;
+        this.pos = new Vector(0, 0); 
         this.scale = 1; 
     }
 
@@ -12,9 +12,7 @@ export class Camera {
         let protagonist = gom.getProtagonist(); 
         let state = game.state; 
 
-
-
-        this.x = protagonist.x - (width / 2); 
-        this.y = protagonist.y - (height - 200); 
+        this.pos.x = protagonist.pos.x - (width / 2); 
+        this.pos.y = protagonist.pos.y - (height - 200); 
     }
 }

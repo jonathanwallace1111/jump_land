@@ -21,6 +21,6 @@ export class Box extends NonProtagonistGameObject {
     draw = () => {
       stroke(this.strokeColor); 
       fill(this.fillColor); 
-      rect(this.x, this.y, this.w, this.h)
+      rect(this.renderPos.x, this.renderPos.y, this.w, this.h)
     }
   }

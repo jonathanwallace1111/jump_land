@@ -3,8 +3,6 @@
 export class ControlsManager {
     constructor() {
 
-        // this.lateralMovementV = 1; 
-
         this.keyCodeMap = {
             37: 'left',
             38: 'up',
@@ -48,8 +46,8 @@ export class ControlsManager {
         let camera = window.jlSystem.camera; 
         
         if (!!selectedObject) {
-            selectedObject.x = mouseX - camera.x; 
-            selectedObject.y = mouseY - camera.y
+            selectedObject.pos.x = mouseX - camera.x; 
+            selectedObject.pos.y = mouseY - camera.y
         }
 
     }
@@ -88,16 +86,16 @@ export class ControlsManager {
 
         switch (latDirToMove) {
             case "up":
-                protagonist.yv -= protagonist.lateralMovementVelocity;
+                protagonist.velocity.y -= protagonist.lateralMovementVelocity;
                 break;
             case "down":
-                protagonist.yv += protagonist.lateralMovementVelocity;
+                protagonist.velocity.y  += protagonist.lateralMovementVelocity;
                 break;
             case "left":
-                protagonist.xv -= protagonist.lateralMovementVelocity;
+                protagonist.velocity.x -= protagonist.lateralMovementVelocity;
                 break;
             case "right":
-                protagonist.xv += protagonist.lateralMovementVelocity;
+                protagonist.velocity.x  += protagonist.lateralMovementVelocity;
                 break;
             default:
                 return;
@@ -112,22 +110,22 @@ export class ControlsManager {
 
         switch (gravOpposite) {
             case "up":
-                protagonist.yv -= protagonist.jumpVelocity;
+                protagonist.velocity.y -= protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "down":
-                protagonist.yv += protagonist.jumpVelocity;
+                protagonist.velocity.y += protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "left":
-                protagonist.xv -= protagonist.jumpVelocity;
+                protagonist.velocity.x  -= protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "right":
-                protagonist.xv += protagonist.jumpVelocity;
+                protagonist.velocity.x  += protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
             default:
@@ -161,7 +159,7 @@ export class ControlsManager {
                 this.moveLaterally();
             }
 
-        protagonist.x += protagonist.xv;
-        protagonist.y += protagonist.yv;
+        protagonist.pos.x += protagonist.velocity.x;
+        protagonist.pos.y += protagonist.velocity.y;
     }
 }

@@ -10,16 +10,16 @@ export class PhysicsManager {
         if (!object.onGround) {
             switch (this.gravityDirection) {
                 case "up":
-                    object.yv -= this.gravityStrength;
+                    object.velocity.y -= this.gravityStrength;
                     break;
                 case "down":
-                    object.yv += this.gravityStrength;
+                    object.velocity.y += this.gravityStrength;
                     break;
                 case "left":
-                    object.xv -= this.gravityStrength;
+                    object.velocity.x  -= this.gravityStrength;
                     break;
                 case "right":
-                    object.xv += this.gravityStrength;
+                    object.velocity.x  += this.gravityStrength;
                     break;
                 default:
                     break;
@@ -33,16 +33,16 @@ export class PhysicsManager {
         if (!protagonist.onGround) {
             switch (this.gravityDirection) {
                 case "up":
-                    protagonist.yv -= this.gravityStrength;
+                    protagonist.velocity.y -= this.gravityStrength;
                     break;
                 case "down":
-                    protagonist.yv += this.gravityStrength;
+                    protagonist.velocity.y += this.gravityStrength;
                     break;
                 case "left":
-                    protagonist.xv -= this.gravityStrength;
+                    protagonist.velocity.x  -= this.gravityStrength;
                     break;
                 case "right":
-                    protagonist.xv += this.gravityStrength;
+                    protagonist.velocity.x  += this.gravityStrength;
                     break;
                 default:
                     break;
@@ -51,14 +51,14 @@ export class PhysicsManager {
     }
 
     applyFrictionToObject = () => {
-        object.xv *= 0.9;
-        object.yv *= 0.9;
+        object.velocity.x  *= 0.9;
+        object.velocity.y *= 0.9;
     }
 
     applyFrictionToProtagonist = () => {
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
-        protagonist.xv *= 0.9;
-        protagonist.yv *= 0.9;
+        protagonist.velocity.x  *= 0.9;
+        protagonist.velocity.y *= 0.9;
     }
 
     determineDirectionOfCollision = (obj1, obj2) => {
@@ -69,10 +69,10 @@ export class PhysicsManager {
         var obj1HalfH = obj1.h / 2
         var obj2HalfW = obj2.w / 2
         var obj2HalfH = obj2.h / 2
-        var obj1CenterX = obj1.x + obj1.w / 2
-        var obj1CenterY = obj1.y + obj1.h / 2
-        var obj2CenterX = obj2.x + obj2.w / 2
-        var obj2CenterY = obj2.y + obj2.h / 2
+        var obj1CenterX = obj1.pos.x + obj1.w / 2
+        var obj1CenterY = obj1.pos.y + obj1.h / 2
+        var obj2CenterX = obj2.pos.x + obj2.w / 2
+        var obj2CenterY = obj2.pos.y + obj2.h / 2
 
         // Calculate the distance between centers
         var diffX = obj1CenterX - obj2CenterX
@@ -121,10 +121,10 @@ export class PhysicsManager {
     collisionDetection = (obj1, obj2) => {
         // console.log("cd()")
         let didCollideBool = (
-            obj1.x <= obj2.x + obj2.w &&
-            obj1.x + obj1.w >= obj2.x &&
-            obj1.y <= obj2.y + obj2.h &&
-            obj1.h + obj1.y >= obj2.y
+            obj1.pos.x <= obj2.pos.x + obj2.w &&
+            obj1.pos.x + obj1.w >= obj2.pos.x &&
+            obj1.pos.y <= obj2.pos.y + obj2.h &&
+            obj1.h + obj1.pos.y >= obj2.pos.y
         )
 
         if (didCollideBool) {
@@ -330,8 +330,8 @@ export class PhysicsManager {
         protagonist.onGround = true;
         protagonist.maxJumpDeltaTimeAccumulator = 0;
 
-        protagonist.xv = 0;
-        protagonist.yv = 0;
+        protagonist.velocity.x  = 0;
+        protagonist.velocity.y = 0;
         obj2.touchingProtagonistBool = true;
         protagonist.jumping = false;
     }

@@ -1,7 +1,7 @@
 import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObject.js";
 import { ColorObject } from "../System/ColorObject.js";
 
-export class WallFloor extends NonProtagonistGameObject {
+export class MediumPlatform extends NonProtagonistGameObject {
     constructor(x, y, w, h, idNum) { 
       super(x, y, w, h); 
       
@@ -14,8 +14,8 @@ export class WallFloor extends NonProtagonistGameObject {
       this.leftSide = this.pos.x; 
       this.rightSide = this.pos.x + this.w;
     
-      this.id = `WF-idNum${idNum}`; 
-      this.type = "wallFloor"; 
+      this.id = `MP-idNum${idNum}`; 
+      this.type = "mediumPlatform"; 
     }
 
     touchProtagonist() { 
