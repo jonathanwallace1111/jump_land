@@ -18,8 +18,9 @@ export class Protagonist extends PhysicalGameObject {
       height - (this.y - (this.h / 2))
     )
 
+    this.jumpVelocity = 3.5; 
+    this.lateralMovementVelocity = 1;
     this.acceleration = .01
-    this.currentVAbs = .8;
     this.maxLateralVelocity = 1;
 
     this.xv = 0;

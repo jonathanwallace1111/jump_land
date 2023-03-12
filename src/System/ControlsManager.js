@@ -5,9 +5,6 @@ export class ControlsManager {
 
         // this.lateralMovementV = 1; 
 
-        // this goes in protagonist
-        this.jumpStrength = 3.5;
-
         this.keyCodeMap = {
             37: 'left',
             38: 'up',
@@ -46,12 +43,14 @@ export class ControlsManager {
     }
 
     mouseIsDragged = () => {
+        
         let selectedObject = window.jlSystem.state.selectedObject; 
         let camera = window.jlSystem.camera; 
-
-        selectedObject.x = mouseX - camera.x; 
-        selectedObject.y = mouseY - camera.y
         
+        if (!!selectedObject) {
+            selectedObject.x = mouseX - camera.x; 
+            selectedObject.y = mouseY - camera.y
+        }
 
     }
 
@@ -67,8 +66,12 @@ export class ControlsManager {
         }
     }
 
-    moveLaterally = (gravityDirection, gravOpposite, protagonist) => {
-        let state = window.jlSystem.state; 
+    moveLaterally = () => {
+        let pe = window.jlSystem.physicsEngine;
+        let state = window.jlSystem.state;  
+        let gravityDirection = pe.gravityDirection; 
+        let gravOpposite = pe.gravOpposite; 
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
 
         let latDirAPressedBool = this.liveKeyMap[state.lateralDirections.a]; 
         let latDirBPressedBool = this.liveKeyMap[state.lateralDirections.b];
@@ -85,41 +88,46 @@ export class ControlsManager {
 
         switch (latDirToMove) {
             case "up":
-                protagonist.yv -= protagonist.currentVAbs;
+                protagonist.yv -= protagonist.lateralMovementVelocity;
                 break;
             case "down":
-                protagonist.yv += protagonist.currentVAbs;
+                protagonist.yv += protagonist.lateralMovementVelocity;
                 break;
             case "left":
-                protagonist.xv -= protagonist.currentVAbs;
+                protagonist.xv -= protagonist.lateralMovementVelocity;
                 break;
             case "right":
-                protagonist.xv += protagonist.currentVAbs;
+                protagonist.xv += protagonist.lateralMovementVelocity;
                 break;
             default:
                 return;
         }
     }
 
-    jump = (gravityDirection, gravOpposite, protagonist) => {
+    jump = () => {
+        let pe = window.jlSystem.physicsEngine;
+        let gravityDirection = pe.gravityDirection; 
+        let gravOpposite = pe.gravOpposite; 
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+
         switch (gravOpposite) {
             case "up":
-                protagonist.yv -= this.jumpStrength;
+                protagonist.yv -= protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "down":
-                protagonist.yv += this.jumpStrength;
+                protagonist.yv += protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "left":
-                protagonist.xv -= this.jumpStrength;
+                protagonist.xv -= protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
                 break;
             case "right":
-                protagonist.xv += this.jumpStrength;
+                protagonist.xv += protagonist.jumpVelocity;
                 protagonist.jumping = true
                 protagonist.onGround = false;
             default:
@@ -142,22 +150,15 @@ export class ControlsManager {
             this.controlMap[key] = this.liveKeyMap[key];
         });
 
-
-            if (this.liveKeyMap[gravityDirection]) {
-
-            }
-
             if (this.liveKeyMap[gravOpposite] && !protagonist.isJumping) {
                 protagonist.maxJumpDeltaTimeAccumulator += deltaTime;
-
                 if (protagonist.maxJumpDeltaTimeAccumulator < protagonist.maxJumpDeltaTimeLimit) {
-                    this.jump(gravityDirection, gravOpposite, protagonist);
+                    this.jump();
                 }
             }
 
             if (this.liveKeyMap[state.lateralDirections.a] || this.liveKeyMap[state.lateralDirections.b]) {
-
-                this.moveLaterally(gravityDirection, gravOpposite, protagonist);
+                this.moveLaterally();
             }
 
         protagonist.x += protagonist.xv;
