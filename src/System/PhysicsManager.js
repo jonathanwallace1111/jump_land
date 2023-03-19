@@ -233,7 +233,11 @@ export class PhysicsManager {
 
                 boundry.touchProtagonist(); 
 
-                this.collisionHandlerForProtagonist(protagonist, boundry, collisionDirection);
+                if (boundry.isDeathObject){
+                    this.deathObjectCollisionHandler(); 
+                } else {
+                    this.collisionHandlerForProtagonist(protagonist, boundry, collisionDirection);
+                }
             };
 
             //this conditional is garbage collection, removing boundries that are no longer touching protag from objectsCurrentlyTouchingProtag
@@ -271,7 +275,11 @@ export class PhysicsManager {
 
                 box.touchProtagonist(); 
 
-                this.collisionHandlerForProtagonist(protagonist, box, collisionDirection);
+                if (boundry.isDeathObject){
+                    this.deathObjectCollisionHandler(); 
+                } else {
+                    this.collisionHandlerForProtagonist(protagonist, box, collisionDirection);
+                }
             };
 
             //this conditional is garbage collection, removing boxes that are no longer touching protag from objectsCurrentlyTouchingProtag
@@ -334,6 +342,18 @@ export class PhysicsManager {
         protagonist.velocity.y = 0;
         obj2.touchingProtagonistBool = true;
         protagonist.jumping = false;
+    }
+
+    deathObjectCollisionHandler = () => { 
+        let state = window.jlSystem.state; 
+        let lm = window.jlSystem.levelManager; 
+        let gom = window.jlSystem.gameObjectManager; 
+
+        console.log("inside doch"); 
+
+        state.stats.numOfDeaths++; 
+        gom.clearObjects(); 
+        lm.loadLevel(); 
     }
 
     update = () => {

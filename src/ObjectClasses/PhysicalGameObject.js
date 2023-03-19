@@ -17,6 +17,7 @@ export class PhysicalGameObject extends GameObject {
         this.renderH = h; 
 
         this.dtAccumulator = 0;
+
     }
 
     rotate = () => {

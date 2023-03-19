@@ -21,6 +21,11 @@ export class GameObjectManager {
         this.gameObjects = [];
     }
 
+    resetLevel = () => {
+        this.clearObjects(); 
+        
+    }
+
     removeObject(obj) {
         this.gameObjects.splice(this.gameObjects.indexOf(obj), 1);
     }

@@ -20,8 +20,9 @@ export class ColorObject {
 
         this.protagonistFillColor = this.colorPalette.blue; 
         this.backgroundColor = this.colorPalette.black; 
-        this.untouchedObjectFillColor = this.colorPalette.red;
-        this.touchedObjectFillColor = this.colorPalette.purple;
+        this.untouchedObjectFillColor = this.colorPalette.yellow;
+        this.touchedObjectFillColor = this.colorPalette.green;
+        this.deathObjectFillColor = this.colorPalette.red; 
         this.strokeColor = this.colorPalette.white; 
     }
 }

@@ -22,6 +22,10 @@ export class StateManager {
             inCorner: false 
         }
 
+        this.stats = { 
+            numOfDeaths: 0, 
+        }
+
         this.levelMetaData = {}; 
 
         this.inLevelBuilderMode = true; 
