@@ -15,5 +15,15 @@ export class PhysicalGameObject extends GameObject {
         // this.renderY = y; 
         this.renderW = w; 
         this.renderH = h; 
+
+        this.dtAccumulator = 0;
+    }
+
+    rotate = () => {
+        console.log("rotate"); 
+        let newW = this.h;
+        let newH = this.w;
+        this.w = newW;
+        this.h = newH;
     }
 }

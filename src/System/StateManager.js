@@ -24,8 +24,6 @@ export class StateManager {
 
         this.levelMetaData = {}; 
 
-        this.selectedObject = undefined; 
-
         this.inLevelBuilderMode = true; 
     }
 

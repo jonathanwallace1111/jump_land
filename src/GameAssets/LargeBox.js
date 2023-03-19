@@ -3,8 +3,10 @@ import { ColorObject } from "../System/ColorObject.js";
 import { Vector } from "../Utilities/Vector.js";
 
 
-export class LargeBox {
+export class LargeBox extends NonProtagonistGameObject {
     constructor(x, y) {
+      super(x, y); 
+
 
       this.pos = new Vector(x, y); 
       this.renderPos = new Vector(x, y); 

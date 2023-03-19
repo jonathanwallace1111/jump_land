@@ -68,7 +68,7 @@ export class LevelManager {
                 },
                 {
                     id: "WF-idNum-2",
-                    x: 2000,
+                    x: 780,
                     y: 0,
                     w: 20,
                     h: 780,
