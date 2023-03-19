@@ -18,6 +18,8 @@ export class PhysicalGameObject extends GameObject {
 
         this.dtAccumulator = 0;
 
+        this.isDeathObject = false; 
+        this.isGoalObject = false; 
     }
 
     rotate = () => {

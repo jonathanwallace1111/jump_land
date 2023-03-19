@@ -28,7 +28,7 @@ export class StateManager {
 
         this.levelMetaData = {}; 
 
-        this.inLevelBuilderMode = true; 
+        this.inLevelBuilderMode = false; 
     }
 
     updateDeltaTime = () => {

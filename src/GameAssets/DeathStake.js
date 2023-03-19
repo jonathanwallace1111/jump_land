@@ -5,6 +5,8 @@ export class DeathStake extends DeathObject {
   constructor(x, y) {
     super(x, y); 
 
+    this.id = "DeathStake"; 
+
     this.h = 30;
     this.w = 10;
 
@@ -13,6 +15,11 @@ export class DeathStake extends DeathObject {
     this.fillColor = this.colorObject.deathObjectFillColor;
     this.strokeColor = this.colorObject.strokeColor;
   }
+
+  touchProtagonist = () => { 
+    this.hasTouchedProtagonistBool = true; 
+
+}
 
   draw = () => {
     stroke(this.strokeColor);

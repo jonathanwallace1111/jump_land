@@ -26,6 +26,10 @@ export class SmallSpikePlatform extends DeathObject {
 
     }
 
+    touchProtagonist() { 
+        this.hasTouchedProtagonistBool = true; 
+    }
+
     draw = () => {
         
         for (let i = 0; i < this.spikesArr.length; i++) {

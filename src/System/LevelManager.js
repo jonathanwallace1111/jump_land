@@ -2,6 +2,8 @@
 // import level1Data from "../Levels/level_1.json";
 import { WallFloor } from "../GameAssets/WallFloor.js";
 import { Protagonist } from "../ObjectClasses/Protagonist.js";
+import { DeathStake } from "../GameAssets/DeathStake.js";
+import { GoalObject } from "../GameAssets/GoalObject.js";
 
 
 export class LevelManager {
@@ -48,7 +50,7 @@ export class LevelManager {
         let data = {
             protagonist: {
                 id: "Protagonist",
-                x: 400,
+                x: 50,
                 y: 600,
                 w: 50,
                 h: 50,
@@ -56,12 +58,20 @@ export class LevelManager {
                 fillColor: "#0247FE",
                 strokeColor: "white"
             },
+            deathStake: {
+                x: 400, 
+                y: 715
+            },
+            goalObject: {
+                x: 650,
+                y: 700, 
+            },
             wallFloors: [
                 {
                     id: "WF-idNum-1",
                     x: 0,
                     y: 0,
-                    w: 2000,
+                    w: 780,
                     h: 20,
                     fillColor: "#FE2712",
                     strokeColor: "white"
@@ -79,7 +89,7 @@ export class LevelManager {
                     id: "WF-idNum-3",
                     x: 20,
                     y: 780,
-                    w: 2000,
+                    w: 780,
                     h: 20,
                     fillColor: "#FE2712",
                     strokeColor: "white"
@@ -102,7 +112,9 @@ export class LevelManager {
 
         let newLevelObjects = [
             ...this.level.wallFloors.map(wall => new WallFloor(wall.x, wall.y, wall.w, wall.h, wall.id)),
-            new Protagonist(this.level.protagonist.x, this.level.protagonist.y, this.level.protagonist.w, this.level.protagonist.h)
+            new Protagonist(this.level.protagonist.x, this.level.protagonist.y, this.level.protagonist.w, this.level.protagonist.h),
+            new DeathStake(this.level.deathStake.x, this.level.deathStake.y), 
+            new GoalObject(this.level.goalObject.x, this.level.goalObject.y)
         ];
 
         gom.loadObjects(newLevelObjects);

@@ -23,7 +23,7 @@ export class GameObjectManager {
 
     resetLevel = () => {
         this.clearObjects(); 
-        
+
     }
 
     removeObject(obj) {
@@ -36,6 +36,10 @@ export class GameObjectManager {
 
     getProtagonist() {
         return this.gameObjects.find(obj => obj.id === 'Protagonist');
+    }
+
+    getAllObjectsExceptProtagonist = () => {
+        return this.gameObjects.filter(obj => obj.id != "Protagonist"); 
     }
 
     getBoundriesArr() {

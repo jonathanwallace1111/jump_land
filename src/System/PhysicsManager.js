@@ -205,48 +205,45 @@ export class PhysicsManager {
     //eventually I need to simplify this and make one loop that goes through all boxes and boundries 
     metaCollisionDetectionForProtagonist = () => {
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
-        let boundries = window.jlSystem.gameObjectManager.getBoundriesArr(); 
+        let gameObjects = window.jlSystem.gameObjectManager.getAllObjectsExceptProtagonist(); 
         let state = window.jlSystem.state; 
-        let boxes = []; 
-        let boundriesCurrentlyTouchingProtagonistIDArr = []
+        // let boundriesCurrentlyTouchingProtagonistIDArr = []
 
-        //boundries loop
-        for (let i = 0; i < boundries.length; i++) {
-            let boundry = boundries[i];
-
-            // console.log(boundry); 
-            // console.log(protagonist); 
+        for (let i = 0; i < gameObjects.length; i++) {
+            let obj = gameObjects[i];
 
             //This conditional decides if the collision handler needs to be called and sets state
-            if (this.collisionDetection(protagonist, boundry) && !boundry.isCurrentlyTouchingProtagonistBool) {
-                state.objectsCurrentlyTouchingProtagonist.push(boundry)
-                state.objectsCurrentlyTouchingProtagonistIdArr.push(boundry.id)
-                boundry.isCurrentlyTouchingProtagonistBool = true;
+            if (this.collisionDetection(protagonist, obj) && !obj.isCurrentlyTouchingProtagonistBool) {
+                state.objectsCurrentlyTouchingProtagonist.push(obj)
+                state.objectsCurrentlyTouchingProtagonistIdArr.push(obj.id)
+                obj.isCurrentlyTouchingProtagonistBool = true;
 
-                let collisionDirection = this.determineDirectionOfCollision(protagonist, boundry);
-                boundry.touchingFromWhichDirection = collisionDirection;
+                let collisionDirection = this.determineDirectionOfCollision(protagonist, obj);
+                obj.touchingFromWhichDirection = collisionDirection;
 
                 //this conditional checks if the protagonist is in a corner
                 if (state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
                     protagonist.inCorner = true;
                 }
 
-                boundry.touchProtagonist(); 
+                obj.touchProtagonist(); 
 
-                if (boundry.isDeathObject){
+                if (obj.isDeathObject){
                     this.deathObjectCollisionHandler(); 
+                } else if (obj.isGoalObject) {
+                    this.goalObjectCollisionHandler(); 
                 } else {
-                    this.collisionHandlerForProtagonist(protagonist, boundry, collisionDirection);
+                    this.collisionHandlerForProtagonist(protagonist, obj, collisionDirection);
                 }
             };
 
-            //this conditional is garbage collection, removing boundries that are no longer touching protag from objectsCurrentlyTouchingProtag
-            if (!this.collisionDetection(protagonist, boundry) && boundry.isCurrentlyTouchingProtagonistBool) {
-                let boundryIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(boundry.id);
-                state.objectsCurrentlyTouchingProtagonist.splice(boundryIndex, 1);
-                state.objectsCurrentlyTouchingProtagonistIdArr.splice(boundryIndex, 1);
-                boundry.isCurrentlyTouchingProtagonistBool = false;
-                boundry.touchingFromWhichDirection = null;
+            //this conditional is garbage collection, removing objects that are no longer touching protag from objectsCurrentlyTouchingProtag
+            if (!this.collisionDetection(protagonist, obj) && obj.isCurrentlyTouchingProtagonistBool) {
+                let objIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(obj.id);
+                state.objectsCurrentlyTouchingProtagonist.splice(objIndex, 1);
+                state.objectsCurrentlyTouchingProtagonistIdArr.splice(objIndex, 1);
+                obj.isCurrentlyTouchingProtagonistBool = false;
+                obj.touchingFromWhichDirection = null;
             }
 
             if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
@@ -255,51 +252,51 @@ export class PhysicsManager {
             }
         }
 
-        //boxes loop
-        for (let i = 0; i < boxes.length; i++) {
-            let box = boxes[i];
+        // //boxes loop
+        // for (let i = 0; i < boxes.length; i++) {
+        //     let box = boxes[i];
 
-            //This conditional decides if the collision handler needs to be called and sets state
-            if (this.collisionDetection(protagonist, box) && !box.isCurrentlyTouchingProtagonistBool) {
-                state.objectsCurrentlyTouchingProtagonist.push(box)
-                state.objectsCurrentlyTouchingProtagonistIdArr.push(box.id)
-                box.isCurrentlyTouchingProtagonistBool = true;
+        //     //This conditional decides if the collision handler needs to be called and sets state
+        //     if (this.collisionDetection(protagonist, box) && !box.isCurrentlyTouchingProtagonistBool) {
+        //         state.objectsCurrentlyTouchingProtagonist.push(box)
+        //         state.objectsCurrentlyTouchingProtagonistIdArr.push(box.id)
+        //         box.isCurrentlyTouchingProtagonistBool = true;
 
-                let collisionDirection = this.determineDirectionOfCollision(protagonist, box);
-                box.touchingFromWhichDirection = collisionDirection;
+        //         let collisionDirection = this.determineDirectionOfCollision(protagonist, box);
+        //         box.touchingFromWhichDirection = collisionDirection;
 
-                //this conditional checks if the protagonist is in a corner
-                if (state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
-                    protagonist.inCorner = true;
-                }
+        //         //this conditional checks if the protagonist is in a corner
+        //         if (state.objectsCurrentlyTouchingProtagonistIdArr.length === 2) {
+        //             protagonist.inCorner = true;
+        //         }
 
-                box.touchProtagonist(); 
+        //         box.touchProtagonist(); 
 
-                if (boundry.isDeathObject){
-                    this.deathObjectCollisionHandler(); 
-                } else {
-                    this.collisionHandlerForProtagonist(protagonist, box, collisionDirection);
-                }
-            };
+        //         if (boundry.isDeathObject){
+        //             this.deathObjectCollisionHandler(); 
+        //         } else {
+        //             this.collisionHandlerForProtagonist(protagonist, box, collisionDirection);
+        //         }
+        //     };
 
-            //this conditional is garbage collection, removing boxes that are no longer touching protag from objectsCurrentlyTouchingProtag
-            if (!this.collisionDetection(protagonist, box) && box.isCurrentlyTouchingProtagonistBool) {
-                let boxIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(box.id);
-                state.objectsCurrentlyTouchingProtagonist.splice(boxIndex, 1);
-                state.objectsCurrentlyTouchingProtagonistIdArr.splice(boxIndex, 1);
-                box.isCurrentlyTouchingProtagonistBool = false;
-                box.touchingFromWhichDirection = null;
-            }
+        //     //this conditional is garbage collection, removing boxes that are no longer touching protag from objectsCurrentlyTouchingProtag
+        //     if (!this.collisionDetection(protagonist, box) && box.isCurrentlyTouchingProtagonistBool) {
+        //         let boxIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(box.id);
+        //         state.objectsCurrentlyTouchingProtagonist.splice(boxIndex, 1);
+        //         state.objectsCurrentlyTouchingProtagonistIdArr.splice(boxIndex, 1);
+        //         box.isCurrentlyTouchingProtagonistBool = false;
+        //         box.touchingFromWhichDirection = null;
+        //     }
 
-            if (state.objectsCurrentlyTouchingProtagonist.length === 0) {
-                protagonist.onGround = false; 
-            }
+        //     if (state.objectsCurrentlyTouchingProtagonist.length === 0) {
+        //         protagonist.onGround = false; 
+        //     }
 
-            if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
-                protagonist.inCorner = false;
-                this.exitCorner();
-            }
-        }
+        //     if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {
+        //         protagonist.inCorner = false;
+        //         this.exitCorner();
+        //     }
+        // }
     }
 
     collisionHandlerForProtagonist = (protagonist, obj2, collisionDirection) => {
@@ -349,9 +346,20 @@ export class PhysicsManager {
         let lm = window.jlSystem.levelManager; 
         let gom = window.jlSystem.gameObjectManager; 
 
-        console.log("inside doch"); 
-
         state.stats.numOfDeaths++; 
+        console.log(`You have died ${state.stats.numOfDeaths} times`); 
+
+        gom.clearObjects(); 
+        lm.loadLevel(); 
+    }
+
+    goalObjectCollisionHandler = () => { 
+        let state = window.jlSystem.state; 
+        let lm = window.jlSystem.levelManager; 
+        let gom = window.jlSystem.gameObjectManager; 
+
+        console.log("YOU WIN"); 
+
         gom.clearObjects(); 
         lm.loadLevel(); 
     }

@@ -16,6 +16,10 @@ export class Spike extends DeathObject {
         this.strokeColor = this.colorObject.strokeColor;
     }
 
+    touchProtagonist() { 
+        this.hasTouchedProtagonistBool = true; 
+    }
+
     draw = () => {
         stroke(this.strokeColor);
         fill(this.fillColor); 

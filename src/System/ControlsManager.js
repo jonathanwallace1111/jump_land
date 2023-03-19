@@ -8,6 +8,7 @@ import { LargePlatform } from "../GameAssets/LargePlatform.js";
 import { Spike } from "../GameAssets/Spike.js";
 import { SmallSpikePlatform } from "../GameAssets/SmallSpikePlatform.js";
 import { DeathStake } from "../GameAssets/DeathStake.js"
+import { GoalObject } from "../GameAssets/GoalObject.js"
 
 
 
@@ -313,7 +314,10 @@ export class ControlsManager {
         }
 
         if (this.liveKeyMap['f']) {
-
+            if (!this.localState.newObjectCreated) {
+                this.localState.newObjectCreated = true;
+                gameObjArr.push(new GoalObject(400, 400));
+            }
         }
         if (this.liveKeyMap['g']) {
 

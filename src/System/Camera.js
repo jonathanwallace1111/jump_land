@@ -11,12 +11,13 @@ export class Camera {
     }
 
     updatePosition = () => { 
-        let game = window.jlSystem; 
-        let gom = game.gameObjectManager; 
-        let protagonist = gom.getProtagonist(); 
-        let state = game.state; 
+        //THIS IS ALL COMMENTED OUT BECAUSE I'M JUST NOT USING THE CAMERA AT THIS STAGE
+        // let game = window.jlSystem; 
+        // let gom = game.gameObjectManager; 
+        // let protagonist = gom.getProtagonist(); 
+        // let state = game.state; 
 
-        this.pos.x = protagonist.pos.x - (width / 2); 
-        this.pos.y = protagonist.pos.y - (height - 200); 
+        // this.pos.x = protagonist.pos.x - (width / 2); 
+        // this.pos.y = protagonist.pos.y - (height - 200); 
     }
 }

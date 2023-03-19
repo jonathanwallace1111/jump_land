@@ -23,6 +23,7 @@ export class ColorObject {
         this.untouchedObjectFillColor = this.colorPalette.yellow;
         this.touchedObjectFillColor = this.colorPalette.green;
         this.deathObjectFillColor = this.colorPalette.red; 
+        this.goalObjectFillColor = this.colorPalette.yellowOrange; 
         this.strokeColor = this.colorPalette.white; 
     }
 }
