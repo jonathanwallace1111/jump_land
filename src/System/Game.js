@@ -19,7 +19,7 @@ export default class Game {
     }
 
     init = () => {
-        this.levelManager.loadLevel()
+        this.levelManager.loadLevel(1)
     }
 
     updateControls = () => {

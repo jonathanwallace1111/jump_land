@@ -16,7 +16,7 @@ export class PhysicalGameObject extends GameObject {
         this.renderW = w; 
         this.renderH = h; 
 
-        this.dtAccumulator = 0;
+        this.dtObject = {};  
 
         this.isDeathObject = false; 
         this.isGoalObject = false; 

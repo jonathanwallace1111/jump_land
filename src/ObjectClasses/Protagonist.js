@@ -12,6 +12,7 @@ export class Protagonist extends PhysicalGameObject {
     this.isProtagonist = true;
     this.protagonistBool = true;
 
+    //This was only useful in the 
     this.spawnBox = new NonProtagonistGameObject(
       this.pos.x - (this.w / 2),
       this.pos.y - (this.h / 2),
@@ -25,14 +26,16 @@ export class Protagonist extends PhysicalGameObject {
     this.maxLateralVelocity = 1;
 
     this.velocity = new Vector(0, 0)
-    // this.xv = 0;
-    // this.yv = 0;
 
     this.isJumping = false;
     this.maxJumpDeltaTimeAccumulator = 0;
     this.maxJumpDeltaTimeLimit = 100;
 
     this.onGround = false;
+
+    this.dtObject = {
+
+    }
 
     this.colorObject = new ColorObject(); 
     this.strokeColor = this.colorObject.strokeColor;

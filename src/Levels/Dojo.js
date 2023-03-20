@@ -2,7 +2,7 @@ import { Level } from "../ObjectClasses/Level.js";
 import { WallFloor } from "../GameAssets/WallFloor.js";
 import { Box } from "../GameAssets/Box.js"; 
 
-export class Level_2 extends Level {
+export class Dojo extends Level {
     constructor(protagonist, physicsEngine, fillColor, strokeColor) {
       super();
       this.wallFloorFillColor = fillColor; 
@@ -29,9 +29,8 @@ export class Level_2 extends Level {
   
     createRandomBoxes = () => {
       let randomBoxArr = [];
-    //   let numOfBoxes = random();
-      let numOfBoxes = 4; 
-
+      let numOfBoxes = random(4, 8);
+  
       for (let i = 0; i < numOfBoxes; i++) {
         let box = new Box (
           random(this.wallFloorThickness + this.outerBoundryBufferForBoxes, this.roomHeightAndWidth - this.outerBoundryBufferForBoxes),
@@ -64,6 +63,9 @@ export class Level_2 extends Level {
     init = () => {
       this.outerBoundriesArr = this.createOuterBoundries();
       this.boxesArr = this.createRandomBoxes();
+
+      this.outerBoundriesArr.forEach(b => console.log(b));
+      this.boxesArr.forEach(b => console.log(b));
     }
   
     update = () => {

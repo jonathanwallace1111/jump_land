@@ -2,19 +2,17 @@ import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObj
 import { ColorObject } from "../System/ColorObject.js";
 
 export class GoalObject extends NonProtagonistGameObject {
-  constructor(x, y) {
-    super(x, y); 
+  constructor(x, y, w, h, idNum) {
+    super(x, y, w, h); 
 
-    this.id = "GoalObject"; 
-
-    this.w = 35; 
-    this.h = 35; 
+    this.isGoalObject = true; 
 
     this.colorObject = new ColorObject(); 
     this.fillColor = this.colorObject.goalObjectFillColor; 
     this.strokeColor = this.colorObject.strokeColor; 
 
-    this.isGoalObject = true; 
+    this.id = `GO -idNum${idNum}`; 
+    this.type = "GoalObject"; 
   }
 
   touchProtagonist = () => { 

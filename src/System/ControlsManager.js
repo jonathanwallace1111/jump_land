@@ -1,12 +1,6 @@
 // import { Camera } from "./Camera";
-import { SmallBox } from "../GameAssets/SmallBox.js";
-import { MediumBox } from "../GameAssets/MediumBox.js";
-import { LargeBox } from "../GameAssets/LargeBox.js";
-import { SmallPlatform } from "../GameAssets/SmallPlatform.js";
-import { MediumPlatform } from "../GameAssets/MediumPlatform.js";
-import { LargePlatform } from "../GameAssets/LargePlatform.js";
-import { Spike } from "../GameAssets/Spike.js";
-import { SmallSpikePlatform } from "../GameAssets/SmallSpikePlatform.js";
+import { Box } from "../GameAssets/Box.js"
+import { Platform } from "../GameAssets/Platform.js"; 
 import { DeathStake } from "../GameAssets/DeathStake.js"
 import { GoalObject } from "../GameAssets/GoalObject.js"
 
@@ -218,6 +212,7 @@ export class ControlsManager {
     levelBuilderUpdate = () => {
         let camera = window.jlSystem.camera;
         let gameObjArr = window.jlSystem.gameObjectManager.gameObjects;
+        let globalState = window.jlSystem.state; 
 
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
@@ -238,41 +233,51 @@ export class ControlsManager {
             camera.pos.x += cameraV;
         }
 
+        //Small box
         if (this.liveKeyMap['q']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new SmallBox(400, 400));
+                gameObjArr.push(new Box(400, 400, 50, 50, gameObjArr.length + 1));
             }
         }
+        //Medium box
         if (this.liveKeyMap['w']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new MediumBox(400, 400));
+                gameObjArr.push(new Box(400, 400, 75, 75, gameObjArr.length + 1));
             }
         }
+        //Large box
         if (this.liveKeyMap['e']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new LargeBox(400, 400));
+                gameObjArr.push(new Box(400, 400, 125, 125, gameObjArr.length + 1));
             }
         }
 
+        //Small platform
         if (this.liveKeyMap['a']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new SmallPlatform(400, 400));
+                // gameObjArr.push(new SmallPlatform(400, 400));
+                gameObjArr.push(new Platform(400, 400, 20, 100, gameObjArr.length + 1));
             }
         }
+        //Medium platform
         if (this.liveKeyMap['s']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new MediumPlatform(400, 400));
+                // gameObjArr.push(new MediumPlatform(400, 400));
+                gameObjArr.push(new Platform(400, 400, 20, 200, gameObjArr.length + 1));
             }
         }
+        //Large Platform
         if (this.liveKeyMap['d']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new LargePlatform(400, 400));
+                // gameObjArr.push(new LargePlatform(400, 400));
+                gameObjArr.push(new Platform(400, 400, 20, 300, gameObjArr.length + 1));
+
             }
         }
 
@@ -295,16 +300,10 @@ export class ControlsManager {
         }
 
         if (this.liveKeyMap['r']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new Spike(400, 400));
-            }
+
         }
         if (this.liveKeyMap['t']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new SmallSpikePlatform(400, 400));
-            }
+
         }
         if (this.liveKeyMap['y']) {
             if (!this.localState.newObjectCreated) {
@@ -320,7 +319,14 @@ export class ControlsManager {
             }
         }
         if (this.liveKeyMap['g']) {
-
+            if (!this.localState.newObjectCreated) {
+                this.localState.newObjectCreated = true;
+                if (globalState.inLevelBuilderMode) {
+                    globalState.inLevelBuilderMode = false; 
+                } else {
+                    globalState.inLevelBuilderMode = true; 
+                }
+            }
         }
         if (this.liveKeyMap['h']) {
 
@@ -347,6 +353,10 @@ export class ControlsManager {
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
         });
+
+        if (this.liveKeyMap["f"]) {
+            state.inLevelBuilderMode = true; 
+        }
 
         if (this.liveKeyMap[gravOpposite] && !protagonist.isJumping) {
             protagonist.maxJumpDeltaTimeAccumulator += deltaTime;

@@ -1,24 +1,16 @@
 import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObject.js";
 import { ColorObject } from "../System/ColorObject.js";
-import { Vector } from "../Utilities/Vector.js";
 
-
-export class MediumPlatform extends NonProtagonistGameObject {
-  constructor(x, y) { 
-    super(x, y); 
-
+export class Box extends NonProtagonistGameObject {
+    constructor(x, y, w, h, idNum) { 
+      super(x, y, w, h); 
       
-    this.pos = new Vector(x, y); 
-    this.renderPos = new Vector(x, y); 
-
-
-    this.h = 200;
-    this.w = 20;  
+      this.colorObject = new ColorObject(); 
+      this.fillColor = this.colorObject.untouchedObjectFillColor; 
+      this.strokeColor = this.colorObject.strokeColor; 
     
-    
-    this.colorObject = new ColorObject(); 
-    this.fillColor = this.colorObject.untouchedObjectFillColor; 
-    this.strokeColor = this.colorObject.strokeColor; 
+      this.id = `Box-idNum${idNum}`; 
+      this.type = "box"; 
     }
 
     touchProtagonist() { 
@@ -26,10 +18,6 @@ export class MediumPlatform extends NonProtagonistGameObject {
       this.fillColor = this.colorObject.touchedObjectFillColor; 
   }
   
-  update = () => {
-      
-  }
-
     draw = () => {
       stroke(this.strokeColor); 
       fill(this.fillColor);
