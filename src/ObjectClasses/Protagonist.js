@@ -12,7 +12,7 @@ export class Protagonist extends PhysicalGameObject {
     this.isProtagonist = true;
     this.protagonistBool = true;
 
-    //This was only useful in the 
+    //This only seems to be useful in the dojo
     this.spawnBox = new NonProtagonistGameObject(
       this.pos.x - (this.w / 2),
       this.pos.y - (this.h / 2),

@@ -286,7 +286,6 @@ export class ControlsManager {
             if (this.localState.objectIsSelected) {
                 if (!this.localState.newObjectCreated) {
                     this.localState.newObjectCreated = true;
-                    console.log("rotate conditional")
                     this.localState.selectedObject.rotate(); 
                 }
             }
@@ -308,15 +307,12 @@ export class ControlsManager {
         if (this.liveKeyMap['y']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
-                gameObjArr.push(new DeathStake(400, 400));
+                gameObjArr.push(new DeathStake(400, 400, 10, 40, gameObjArr.length + 1));
             }
         }
 
         if (this.liveKeyMap['f']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new GoalObject(400, 400));
-            }
+
         }
         if (this.liveKeyMap['g']) {
             if (!this.localState.newObjectCreated) {

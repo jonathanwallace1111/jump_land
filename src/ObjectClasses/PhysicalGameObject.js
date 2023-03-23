@@ -23,7 +23,6 @@ export class PhysicalGameObject extends GameObject {
     }
 
     rotate = () => {
-        console.log("rotate"); 
         let newW = this.h;
         let newH = this.w;
         this.w = newW;
