@@ -1,12 +1,9 @@
 export class StateManager {
     constructor() {
-
-        //physics manager curretly has its own gravity direction, it should be changed to be handled by stateManager
-        // this.directionOfGravity = "down";
         
-        // this.gravityStrength = 1.5;
-        // this.gravityDirection = "down";
-        // this.gravOpposite = "up";
+        this.gravityStrength = 1.5;
+        this.gravityDirection = "down";
+        this.gravOpposite = "up";
 
 
         this.lateralDirections = {

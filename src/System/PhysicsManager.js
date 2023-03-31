@@ -1,27 +1,24 @@
 export class PhysicsManager {
     constructor() {
-        this.gravityStrength = 1.5;
-        this.gravityDirection = "down";
 
-        this.gravOpposite = "up";
     }
 
     applyGravityToObject = (object) => {
-        
+        let state = window.jlSystem.state; 
         
         if (!object.onGround) {
-            switch (this.gravityDirection) {
+            switch (state.gravityDirection) {
                 case "up":
-                    object.velocity.y -= this.gravityStrength;
+                    object.velocity.y -= state.gravityStrength;
                     break;
                 case "down":
-                    object.velocity.y += this.gravityStrength;
+                    object.velocity.y += state.gravityStrength;
                     break;
                 case "left":
-                    object.velocity.x  -= this.gravityStrength;
+                    object.velocity.x  -= state.gravityStrength;
                     break;
                 case "right":
-                    object.velocity.x  += this.gravityStrength;
+                    object.velocity.x  += state.gravityStrength;
                     break;
                 default:
                     break;
@@ -30,21 +27,22 @@ export class PhysicsManager {
     }
 
     applyGravityToProtagonist = () => {
+        let state = window.jlSystem.state; 
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
 
         if (!protagonist.onGround) {
-            switch (this.gravityDirection) {
+            switch (state.gravityDirection) {
                 case "up":
-                    protagonist.velocity.y -= this.gravityStrength;
+                    protagonist.velocity.y -= state.gravityStrength;
                     break;
                 case "down":
-                    protagonist.velocity.y += this.gravityStrength;
+                    protagonist.velocity.y += state.gravityStrength;
                     break;
                 case "left":
-                    protagonist.velocity.x  -= this.gravityStrength;
+                    protagonist.velocity.x  -= state.gravityStrength;
                     break;
                 case "right":
-                    protagonist.velocity.x  += this.gravityStrength;
+                    protagonist.velocity.x  += state.gravityStrength;
                     break;
                 default:
                     break;
@@ -121,7 +119,6 @@ export class PhysicsManager {
     }
 
     collisionDetection = (obj1, obj2) => {
-        // console.log("cd()")
         let didCollideBool = (
             obj1.pos.x <= obj2.pos.x + obj2.w &&
             obj1.pos.x + obj1.w >= obj2.pos.x &&
@@ -140,10 +137,10 @@ export class PhysicsManager {
         let state = window.jlSystem.state; 
 
         if (!corner) {
-            if (this.gravityDirection === "up" || this.gravityDirection === "down") {
+            if (state.gravityDirection === "up" || state.gravityDirection === "down") {
                 state.lateralDirections.a = "left";
                 state.lateralDirections.b = "right";
-            } else if (this.gravityDirection === "left" || this.gravityDirection === "right") {
+            } else if (state.gravityDirection === "left" || state.gravityDirection === "right") {
                 state.lateralDirections.a = "up";
                 state.lateralDirections.b = "down";
             }
@@ -172,23 +169,25 @@ export class PhysicsManager {
     }
 
     changeGravityDirection = (newGravDirection) => {
-        this.gravityDirection = newGravDirection;
+        let state = window.jlSystem.state; 
+        
+        state.gravityDirection = newGravDirection;
 
         switch (newGravDirection) {
             case "corner":
-                this.gravOpposite = "corner";
+                state.gravOpposite = "corner";
                 break;
             case "up":
-                this.gravOpposite = "down";
+                state.gravOpposite = "down";
                 break;
             case "down":
-                this.gravOpposite = "up";
+                state.gravOpposite = "up";
                 break;
             case "left":
-                this.gravOpposite = "right";
+                state.gravOpposite = "right";
                 break;
             case "right":
-                this.gravOpposite = "left";
+                state.gravOpposite = "left";
                 break;
             default:
                 break;
@@ -205,12 +204,10 @@ export class PhysicsManager {
         }
     }
 
-    //eventually I need to simplify this and make one loop that goes through all boxes and boundries 
     metaCollisionDetectionForProtagonist = () => {
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
         let gameObjects = window.jlSystem.gameObjectManager.getAllObjectsExceptProtagonist(); 
         let state = window.jlSystem.state; 
-        // let boundriesCurrentlyTouchingProtagonistIDArr = []
 
         for (let i = 0; i < gameObjects.length; i++) {
             let obj = gameObjects[i];
@@ -241,13 +238,7 @@ export class PhysicsManager {
 
                 obj.touchProtagonist(); 
 
-                // if (obj.isDeathObject){
-                //     this.deathObjectCollisionHandler(); 
-                // } else if (obj.isGoalObject) {
-                //     this.goalObjectCollisionHandler(); 
-                // } else {
-                    this.collisionHandlerForProtagonist(protagonist, obj, collisionDirection);
-                // }
+                this.collisionHandlerForProtagonist(protagonist, obj, collisionDirection);
             };
 
             //this conditional is garbage collection, removing objects that are no longer touching protag from objectsCurrentlyTouchingProtag
@@ -274,8 +265,6 @@ export class PhysicsManager {
 
     collisionHandlerForProtagonist = (protagonist, obj2, collisionDirection) => {
         let state = window.jlSystem.state; 
-
-        // console.log(protagonist.inCorner); 
 
         if (protagonist.inCorner) {
             let directionsOfObjectsArr = [];

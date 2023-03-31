@@ -141,8 +141,8 @@ export class ControlsManager {
     moveLaterally = () => {
         let pe = window.jlSystem.physicsEngine;
         let state = window.jlSystem.state;
-        let gravityDirection = pe.gravityDirection;
-        let gravOpposite = pe.gravOpposite;
+        let gravityDirection = state.gravityDirection;
+        let gravOpposite = state.gravOpposite;
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist();
 
         let latDirAPressedBool = this.liveKeyMap[state.lateralDirections.a];
@@ -178,8 +178,9 @@ export class ControlsManager {
 
     jump = () => {
         let pe = window.jlSystem.physicsEngine;
-        let gravityDirection = pe.gravityDirection;
-        let gravOpposite = pe.gravOpposite;
+        let state = window.jlSystem.state; 
+        let gravityDirection = state.gravityDirection;
+        let gravOpposite = state.gravOpposite;
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist();
 
         switch (gravOpposite) {
@@ -342,8 +343,8 @@ export class ControlsManager {
     update = () => {
         let pe = window.jlSystem.physicsEngine;
         let state = window.jlSystem.state;
-        let gravityDirection = pe.gravityDirection;
-        let gravOpposite = pe.gravOpposite;
+        let gravityDirection = state.gravityDirection;
+        let gravOpposite = state.gravOpposite;
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist();
 
         Object.values(this.keyCodeMap).forEach(key => {
