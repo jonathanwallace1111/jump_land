@@ -2,8 +2,13 @@ export class StateManager {
     constructor() {
 
         //physics manager curretly has its own gravity direction, it should be changed to be handled by stateManager
-        this.directionOfGravity = "down";
+        // this.directionOfGravity = "down";
         
+        // this.gravityStrength = 1.5;
+        // this.gravityDirection = "down";
+        // this.gravOpposite = "up";
+
+
         this.lateralDirections = {
             a: "left", 
             b: "right"
@@ -28,7 +33,7 @@ export class StateManager {
 
         this.levelMetaData = {}; 
 
-        this.inLevelBuilderMode = true; 
+        this.inLevelBuilderMode = false; 
     }
 
     updateDeltaTime = () => {

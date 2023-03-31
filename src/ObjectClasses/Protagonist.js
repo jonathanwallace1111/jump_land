@@ -37,6 +37,8 @@ export class Protagonist extends PhysicalGameObject {
 
     }
 
+    this.inCorner = false; 
+
     this.colorObject = new ColorObject(); 
     this.strokeColor = this.colorObject.strokeColor;
     this.fillColor = this.colorObject.protagonistFillColor;

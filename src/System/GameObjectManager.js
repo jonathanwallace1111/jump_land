@@ -18,6 +18,9 @@ export class GameObjectManager {
     }
 
     clearObjects = () => {
+        let state = window.jlSystem.state; 
+        state.objectsCurrentlyTouchingProtagonist = [];
+        state.objectsCurrentlyTouchingProtagonistIdArr = []; 
         this.gameObjects = [];
     }
 

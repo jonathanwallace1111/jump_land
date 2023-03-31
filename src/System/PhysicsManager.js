@@ -7,6 +7,8 @@ export class PhysicsManager {
     }
 
     applyGravityToObject = (object) => {
+        
+        
         if (!object.onGround) {
             switch (this.gravityDirection) {
                 case "up":
@@ -197,6 +199,7 @@ export class PhysicsManager {
         let state = window.jlSystem.state; 
         if (state.objectsCurrentlyTouchingProtagonist.length === 1) {
             let obj = state.objectsCurrentlyTouchingProtagonist[0];
+
             this.changeGravityDirection(obj.touchingFromWhichDirection);
             this.assignLateralDirections();
         }
@@ -214,6 +217,16 @@ export class PhysicsManager {
 
             //This conditional decides if the collision handler needs to be called and sets state
             if (this.collisionDetection(protagonist, obj) && !obj.isCurrentlyTouchingProtagonistBool) {
+                if (obj.isDeathObject) {
+                    this.deathObjectCollisionHandler(); 
+                    return; 
+                }
+
+                if (obj.isGoalObject) {
+                    this.goalObjectCollisionHandler(); 
+                    return; 
+                }
+
                 state.objectsCurrentlyTouchingProtagonist.push(obj)
                 state.objectsCurrentlyTouchingProtagonistIdArr.push(obj.id)
                 obj.isCurrentlyTouchingProtagonistBool = true;
@@ -228,18 +241,18 @@ export class PhysicsManager {
 
                 obj.touchProtagonist(); 
 
-                if (obj.isDeathObject){
-                    this.deathObjectCollisionHandler(); 
-                } else if (obj.isGoalObject) {
-                    this.goalObjectCollisionHandler(); 
-                } else {
+                // if (obj.isDeathObject){
+                //     this.deathObjectCollisionHandler(); 
+                // } else if (obj.isGoalObject) {
+                //     this.goalObjectCollisionHandler(); 
+                // } else {
                     this.collisionHandlerForProtagonist(protagonist, obj, collisionDirection);
-                }
+                // }
             };
 
             //this conditional is garbage collection, removing objects that are no longer touching protag from objectsCurrentlyTouchingProtag
-            if (!this.collisionDetection(protagonist, obj) && obj.isCurrentlyTouchingProtagonistBool) {
-                let objIndex = state.objectsCurrentlyTouchingProtagonist.indexOf(obj.id);
+            if (!this.collisionDetection(protagonist, obj) && obj.isCurrentlyTouchingProtagonistBool) {      
+                let objIndex = state.objectsCurrentlyTouchingProtagonist.findIndex(element => element.id === obj.id);
                 state.objectsCurrentlyTouchingProtagonist.splice(objIndex, 1);
                 objIndex = state.objectsCurrentlyTouchingProtagonistIdArr.indexOf(obj.id);
                 state.objectsCurrentlyTouchingProtagonistIdArr.splice(objIndex, 1);
@@ -261,6 +274,8 @@ export class PhysicsManager {
 
     collisionHandlerForProtagonist = (protagonist, obj2, collisionDirection) => {
         let state = window.jlSystem.state; 
+
+        // console.log(protagonist.inCorner); 
 
         if (protagonist.inCorner) {
             let directionsOfObjectsArr = [];
@@ -305,9 +320,19 @@ export class PhysicsManager {
         let state = window.jlSystem.state; 
         let lm = window.jlSystem.levelManager; 
         let gom = window.jlSystem.gameObjectManager; 
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
+
 
         state.stats.numOfDeaths++; 
         console.log(`You have died ${state.stats.numOfDeaths} times`); 
+
+        protagonist.velocity.x  = 0;
+        protagonist.velocity.y = 0;
+
+        protagonist.inCorner = false; 
+        protagonist.onGround = false; 
+        this.changeGravityDirection("down");
+        this.assignLateralDirections();
 
         gom.clearObjects(); 
         lm.loadLevel(1); 
@@ -317,8 +342,18 @@ export class PhysicsManager {
         let state = window.jlSystem.state; 
         let lm = window.jlSystem.levelManager; 
         let gom = window.jlSystem.gameObjectManager; 
+        let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
 
         console.log("YOU WIN"); 
+
+        protagonist.velocity.x  = 0;
+        protagonist.velocity.y = 0;
+
+        protagonist.inCorner = false; 
+        protagonist.onGround = false; 
+        this.changeGravityDirection("down");
+        this.assignLateralDirections();
+
 
         gom.clearObjects(); 
         lm.loadLevel(1); 
