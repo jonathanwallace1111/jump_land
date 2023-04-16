@@ -6,11 +6,8 @@ import { Vector } from "../Utilities/Vector.js";
 export class Protagonist extends PhysicalGameObject {
   constructor(x, y, w, h) {
     super(x, y, w, h);
-    
-    //I need to consolidate these three properties
+  
     this.id = "Protagonist"; 
-    this.isProtagonist = true;
-    this.protagonistBool = true;
 
     //This only seems to be useful in the dojo
     this.spawnBox = new NonProtagonistGameObject(
@@ -29,7 +26,7 @@ export class Protagonist extends PhysicalGameObject {
 
     this.isJumping = false;
     this.maxJumpDeltaTimeAccumulator = 0;
-    this.maxJumpDeltaTimeLimit = 100;
+    this.maxJumpDeltaTimeLimit = 175;
 
     this.onGround = false;
 

@@ -249,6 +249,7 @@ export class PhysicsManager {
                 state.objectsCurrentlyTouchingProtagonistIdArr.splice(objIndex, 1);
                 obj.isCurrentlyTouchingProtagonistBool = false;
                 obj.touchingFromWhichDirection = null;
+                obj.protagnoistNoLongerTouching(); 
             }
 
             if (state.objectsCurrentlyTouchingProtagonistIdArr.length != 2 && protagonist.inCorner) {

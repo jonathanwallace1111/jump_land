@@ -13,4 +13,8 @@ export class NonProtagonistGameObject extends PhysicalGameObject {
         // this.hasTouchedProtagonistBool = true; 
         // console.log(this.hasTouchedProtagonistBool); 
     }
+
+    protagnoistNoLongerTouching() {
+        //This is used for platforms that disappear after the  protagonist leaves
+    }  
 }

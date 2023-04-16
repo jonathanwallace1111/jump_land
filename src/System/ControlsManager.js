@@ -113,7 +113,6 @@ export class ControlsManager {
     }
 
     mouseIsDragged = () => {
-
         let selectedObject = this.localState.selectedObject;
         let camera = window.jlSystem.camera;
 
@@ -121,9 +120,6 @@ export class ControlsManager {
             selectedObject.pos.x = mouseX + camera.pos.x;
             selectedObject.pos.y = mouseY + camera.pos.y;
         }
-
-        // console.log(selectedObject.pos); 
-
     }
 
     keyIsPressed = () => {
@@ -235,12 +231,12 @@ export class ControlsManager {
         }
 
         //Small box
-        if (this.liveKeyMap['q']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new Box(400, 400, 50, 50, gameObjArr.length + 1));
-            }
-        }
+        // if (this.liveKeyMap['q']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new Box(400, 400, 50, 50, gameObjArr.length + 1));
+        //     }
+        // }
         //Medium box
         if (this.liveKeyMap['w']) {
             if (!this.localState.newObjectCreated) {
@@ -292,28 +288,42 @@ export class ControlsManager {
             }
 
         }
-        if (this.liveKeyMap['x']) {
-            console.log(gameObjArr);
-        }
-        if (this.liveKeyMap['c']) {
+        // if (this.liveKeyMap['x']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new Key(400, 400, 20, 300, gameObjArr.length + 1));
+        //     }
+        // }
+        // if (this.liveKeyMap['c']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new PlatformThatDisappearsAMomentAfterYouTouchIt(400, 400, 20, 300, gameObjArr.length + 1))
+        // }
 
-        }
+        // if (this.liveKeyMap['r']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new PlatformAppearsAfterTouchingPreviousPlatform(400, 400, 20, 300, gameObjArr.length + 1));
+        //     }
+        // }
+        // if (this.liveKeyMap['t']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new DisappearAfterLeavingPlatform(400, 400, 20, 300, gameObjArr.length + 1));
+        //     }
+        // }
+        // if (this.liveKeyMap['y']) {
+        //     if (!this.localState.newObjectCreated) {
+        //         this.localState.newObjectCreated = true;
+        //         gameObjArr.push(new OneSidePlatformOppositeSideKillsYou(400, 400, 20, 300, gameObjArr.length + 1));
+        //     }
+        // }
 
-        if (this.liveKeyMap['r']) {
-
-        }
-        if (this.liveKeyMap['t']) {
-
-        }
-        if (this.liveKeyMap['y']) {
+        if (this.liveKeyMap['f']) {
             if (!this.localState.newObjectCreated) {
                 this.localState.newObjectCreated = true;
                 gameObjArr.push(new DeathStake(400, 400, 10, 40, gameObjArr.length + 1));
             }
-        }
-
-        if (this.liveKeyMap['f']) {
-
         }
         if (this.liveKeyMap['g']) {
             if (!this.localState.newObjectCreated) {
