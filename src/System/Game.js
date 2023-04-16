@@ -33,11 +33,12 @@ export default class Game {
 
     update = () => {
         if (this.state.inLevelBuilderMode) {
+            this.state.update(); 
             this.updateControls();
             this.gameObjectManager.update(this.state.deltaTime);
             this.camera.levelBuilderUpdate(); 
         } else {
-            this.state.updateDeltaTime(); 
+            this.state.update(); 
             this.updateControls();
             this.physicsEngine.update(); 
             this.gameObjectManager.update(this.state.deltaTime);

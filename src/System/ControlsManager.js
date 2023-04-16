@@ -14,24 +14,7 @@ export class ControlsManager {
             38: 'up',
             39: 'right',
             40: 'down',
-            81: 'q',
-            87: 'w',
-            69: 'e',
-            65: 'a',
-            83: 's',
-            68: 'd',
-            90: 'z',
-            88: 'x',
-            67: 'c',
             82: 'r',
-            84: 't',
-            89: 'y',
-            70: 'f',
-            71: 'g',
-            72: 'h',
-            86: 'v',
-            66: 'b',
-            78: 'n',
         }
 
         this.controlMap = {
@@ -39,24 +22,7 @@ export class ControlsManager {
             down: false,
             left: false,
             right: false,
-            q: false,
-            w: false,
-            e: false,
-            a: false,
-            s: false,
-            d: false,
-            z: false,
-            x: false,
-            c: false,
             r: false,
-            t: false,
-            y: false,
-            f: false,
-            g: false,
-            h: false,
-            v: false,
-            b: false,
-            n: false,
         };
 
         this.liveKeyMap = {
@@ -64,31 +30,10 @@ export class ControlsManager {
             down: false,
             left: false,
             right: false,
-            q: false,
-            w: false,
-            e: false,
-            a: false,
-            s: false,
-            d: false,
-            z: false,
-            x: false,
-            c: false,
             r: false,
-            t: false,
-            y: false,
-            f: false,
-            g: false,
-            h: false,
-            v: false,
-            b: false,
-            n: false,
         };
 
-        this.localState = {
-            newObjectCreated: false,
-            objectIsSelected: false,
-            selectedObject: undefined,
-        }
+        this.newObjectCreated = false; 
 
         window.mousePressed = this.mouseIsPressed.bind(this);
         window.mouseDragged = this.mouseIsDragged.bind(this);
@@ -101,10 +46,10 @@ export class ControlsManager {
         let objArr = window.jlSystem.gameObjectManager.gameObjects;
         let state = window.jlSystem.state;
 
-        this.localState.newObjectCreated = false;
+        this.newObjectCreated = false; 
 
-        this.localState.selectedObject = objArr.find(obj => {
-            this.localState.objectIsSelected = true; 
+        state.selectedObject = objArr.find(obj => {
+            state.objectIsSelected = true; 
             return (mouseX <= obj.renderPos.x + obj.w &&
                 mouseX >= obj.renderPos.x &&
                 mouseY <= obj.renderPos.y + obj.h &&
@@ -113,7 +58,8 @@ export class ControlsManager {
     }
 
     mouseIsDragged = () => {
-        let selectedObject = this.localState.selectedObject;
+        let state = window.jlSystem.state; 
+        let selectedObject = state.selectedObject;
         let camera = window.jlSystem.camera;
 
         if (!!selectedObject) {
@@ -208,6 +154,7 @@ export class ControlsManager {
 
     levelBuilderUpdate = () => {
         let camera = window.jlSystem.camera;
+        let state = window.jlSystem.state; 
         let gameObjArr = window.jlSystem.gameObjectManager.gameObjects;
         let globalState = window.jlSystem.state; 
 
@@ -230,123 +177,14 @@ export class ControlsManager {
             camera.pos.x += cameraV;
         }
 
-        //Small box
-        // if (this.liveKeyMap['q']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new Box(400, 400, 50, 50, gameObjArr.length + 1));
-        //     }
-        // }
-        //Medium box
-        if (this.liveKeyMap['w']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new Box(400, 400, 75, 75, gameObjArr.length + 1));
-            }
-        }
-        //Large box
-        if (this.liveKeyMap['e']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new Box(400, 400, 125, 125, gameObjArr.length + 1));
-            }
-        }
-
-        //Small platform
-        if (this.liveKeyMap['a']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                // gameObjArr.push(new SmallPlatform(400, 400));
-                gameObjArr.push(new Platform(400, 400, 20, 100, gameObjArr.length + 1));
-            }
-        }
-        //Medium platform
-        if (this.liveKeyMap['s']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                // gameObjArr.push(new MediumPlatform(400, 400));
-                gameObjArr.push(new Platform(400, 400, 20, 200, gameObjArr.length + 1));
-            }
-        }
-        //Large Platform
-        if (this.liveKeyMap['d']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                // gameObjArr.push(new LargePlatform(400, 400));
-                gameObjArr.push(new Platform(400, 400, 20, 300, gameObjArr.length + 1));
-
-            }
-        }
-
-        if (this.liveKeyMap['z']) {
-            //ROTATE OBJECT
-            if (this.localState.objectIsSelected) {
-                if (!this.localState.newObjectCreated) {
-                    this.localState.newObjectCreated = true;
-                    this.localState.selectedObject.rotate(); 
+        //ROTATE OBJECT
+        if (this.liveKeyMap['r']) {
+            if (state.objectIsSelected) {
+                if (!this.newObjectCreated) {
+                    this.newObjectCreated = true;
+                    state.selectedObject.rotate(); 
                 }
             }
-
-        }
-        // if (this.liveKeyMap['x']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new Key(400, 400, 20, 300, gameObjArr.length + 1));
-        //     }
-        // }
-        // if (this.liveKeyMap['c']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new PlatformThatDisappearsAMomentAfterYouTouchIt(400, 400, 20, 300, gameObjArr.length + 1))
-        // }
-
-        // if (this.liveKeyMap['r']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new PlatformAppearsAfterTouchingPreviousPlatform(400, 400, 20, 300, gameObjArr.length + 1));
-        //     }
-        // }
-        // if (this.liveKeyMap['t']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new DisappearAfterLeavingPlatform(400, 400, 20, 300, gameObjArr.length + 1));
-        //     }
-        // }
-        // if (this.liveKeyMap['y']) {
-        //     if (!this.localState.newObjectCreated) {
-        //         this.localState.newObjectCreated = true;
-        //         gameObjArr.push(new OneSidePlatformOppositeSideKillsYou(400, 400, 20, 300, gameObjArr.length + 1));
-        //     }
-        // }
-
-        if (this.liveKeyMap['f']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                gameObjArr.push(new DeathStake(400, 400, 10, 40, gameObjArr.length + 1));
-            }
-        }
-        if (this.liveKeyMap['g']) {
-            if (!this.localState.newObjectCreated) {
-                this.localState.newObjectCreated = true;
-                if (globalState.inLevelBuilderMode) {
-                    globalState.inLevelBuilderMode = false; 
-                } else {
-                    globalState.inLevelBuilderMode = true; 
-                }
-            }
-        }
-        if (this.liveKeyMap['h']) {
-
-        }
-
-        if (this.liveKeyMap['v']) {
-
-        }
-        if (this.liveKeyMap['b']) {
-
-        }
-        if (this.liveKeyMap['n']) {
-
         }
     }
 

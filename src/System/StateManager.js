@@ -44,6 +44,10 @@ export class StateManager {
         this.typesOfObjects = {
 
         }
+
+        //This is where I'll put stuff related to level building
+        this.objectIsSelected = false; 
+        this.selectedObject = null; 
     }
 
     updateDeltaTime = () => {
@@ -58,10 +62,9 @@ export class StateManager {
         let main = document.getElementById("main");
         main.appendChild(dock);
         this.levelBuilderDock = dock;
-        this.turnOffLevelBuilderMode();
+        // this.turnOffLevelBuilderMode();
+        this.turnOnLevelBuilderMode();
     }
-
-
 
     turnOnLevelBuilderMode = () => {
         let gameObjArr = window.jlSystem.gameObjectManager.gameObjects;
@@ -85,60 +88,77 @@ export class StateManager {
         let select = document.createElement('select');
         objectSelectContainer.appendChild(select);
 
+        //BOX OPTIONS
         let smallBox = document.createElement('option');
         smallBox.value = 'smallBox';
         smallBox.text = 'small box';
         select.appendChild(smallBox);
-
         let mediumBox = document.createElement('option');
-        box.value = 'box';
-        box.text = 'box';
-        select.appendChild(box);
-
+        mediumBox.value = 'mediumBox';
+        mediumBox.text = 'medium box';
+        select.appendChild(mediumBox);
         let largeBox = document.createElement('option');
-        box.value = 'box';
-        box.text = 'box';
-        select.appendChild(box);
+        largeBox.value = 'largeBox';
+        largeBox.text = 'large box';
+        select.appendChild(largeBox);
 
-        let platform = document.createElement('option');
-        platform.value = 'platform';
-        platform.text = 'platform';
-        select.appendChild(platform);
+        //PLATFORM OPTIONS
+        let smallPlatform = document.createElement('option');
+        smallPlatform.value = 'smallPlatform';
+        smallPlatform.text = 'small platform';
+        select.appendChild(smallPlatform);
+        let mediumPlatform = document.createElement('option');
+        mediumPlatform.value = 'mediumPlatform';
+        mediumPlatform.text = 'medium platform';
+        select.appendChild(mediumPlatform);
+        let largePlatform = document.createElement('option');
+        largePlatform.value = 'largePlatform';
+        largePlatform.text = 'large platform';
+        select.appendChild(largePlatform);
 
+        //DEATHSTAKE OPTION
+        let deathStake = document.createElement('option');
+        deathStake.value = 'deathStake';
+        deathStake.text = 'death stake';
+        select.appendChild(deathStake);
 
-
-
-
-
-
-
-
-
-
-        let makeObjBtn = document.createElement('div');
+        //button to make the option selected
+        let makeObjBtn = document.createElement("div");
+        makeObjBtn.innerHTML = "make this object";
+        objectSelectContainer.appendChild(makeObjBtn)
 
         makeObjBtn.addEventListener("click", function () {
             switch (select.value) {
                 case "smallBox":
                     gameObjArr.push(new Box(400, 400, 50, 50, gameObjArr.length + 1));
                     break;
-                case "box":
+                case "mediumBox":
                     gameObjArr.push(new Box(400, 400, 75, 75, gameObjArr.length + 1));
                     break;
-                case "box":
-                    gameObjArr.push(new Box(400, 400, 75, 75, gameObjArr.length + 1));
+                case "largeBox":
+                    gameObjArr.push(new Box(400, 400, 125, 125, gameObjArr.length + 1));
                     break;
-                case "platform":
+                case "smallPlatform":
+                    gameObjArr.push(new Platform(400, 400, 20, 100, gameObjArr.length + 1));
+                    break;
+                case "mediumPlatform":
                     gameObjArr.push(new Platform(400, 400, 20, 200, gameObjArr.length + 1));
                     break;
+                case "largePlatform":
+                    gameObjArr.push(new Platform(400, 400, 20, 300, gameObjArr.length + 1));
+                    break;
+                case "deathStake":
+                    gameObjArr.push(new DeathStake(400, 400, 10, 40, gameObjArr.length + 1))
                 default:
                     break;
             }
         });
 
-        makeObjBtn.innerHTML = "make this object";
-
-        objectSelectContainer.appendChild(makeObjBtn)
+        if (this.objectIsSelected) {
+            let selectedOjectDiv = document.createElement("div"); 
+            selectedOjectDiv.innerHTML = `selected obj: ${this.selectedObject.type}`; 
+            objectSelectContainer.appendChild(selectedOjectDiv)
+        }
 
         this.levelBuilderDock.appendChild(objectSelectContainer);
     }
@@ -157,4 +177,8 @@ export class StateManager {
 
     //Gravity changes are currently handled by physics manager, but they should be handled here. 
     changeGravityToDown = () => { }
+
+    update = () => {
+        this.updateDeltaTime(); 
+    }
 }
