@@ -5,6 +5,7 @@ import { GameObjectManager } from "./GameObjectManager.js";
 import { LevelManager } from "./LevelManager.js";
 import { Camera } from "./Camera.js"; 
 import { RenderManager } from "./RenderManager.js";
+// import { BridgeObject } from "../../Bridge/BridgeObject.js"; 
 
 export default class Game {
     constructor() {
@@ -15,6 +16,7 @@ export default class Game {
         this.levelManager = new LevelManager();
         this.camera = new Camera(); 
         this.renderManager = new RenderManager(); 
+        // this.bridge = new BridgeObject(); 
         window.jlSystem = this;
     }
 
@@ -32,6 +34,15 @@ export default class Game {
     }
 
     update = () => {
+
+        // if (this.bridge.incomingBool) {
+            // this.bridge.incoming(); 
+        // }
+
+        // if (this.bridge.outgoingBool) {
+            // this.bridge.outgoing(); 
+        // }
+
         if (this.state.inLevelBuilderMode) {
             this.state.update(); 
             this.updateControls();

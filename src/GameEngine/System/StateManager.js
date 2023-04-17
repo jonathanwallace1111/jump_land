@@ -25,15 +25,7 @@ export class StateManager {
         //This is for platforms that disappear after a moment and other objects that have dt accummulators
         this.timeTrackingObjectsArr = [];
 
-        this.displayModeTypes = {
-            title: "title",
-            mainMenu: "mainMenu",
-            inGame: "inGame", 
-            inGamePause: "inGamePause", 
-            levelBuilder: "levelBuilder",
-        }
 
-        this.activeDisplayMode = this.displayModeTypes.title; 
 
         //This belongs in protagonist
         this.protagonist = {
