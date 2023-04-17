@@ -5,11 +5,9 @@ import { GoalObject } from "../GameAssets/GoalObject.js"
 
 export class StateManager {
     constructor() {
-
         this.gravityStrength = 1.5;
         this.gravityDirection = "down";
         this.gravOpposite = "up";
-
 
         this.lateralDirections = {
             a: "left",
@@ -26,6 +24,16 @@ export class StateManager {
 
         //This is for platforms that disappear after a moment and other objects that have dt accummulators
         this.timeTrackingObjectsArr = [];
+
+        this.displayModeTypes = {
+            title: "title",
+            mainMenu: "mainMenu",
+            inGame: "inGame", 
+            inGamePause: "inGamePause", 
+            levelBuilder: "levelBuilder",
+        }
+
+        this.activeDisplayMode = this.displayModeTypes.title; 
 
         //This belongs in protagonist
         this.protagonist = {
@@ -78,11 +86,6 @@ export class StateManager {
         btn.innerHTML = "TURN OFF LVL BUILDER"
         btn.addEventListener("click", this.turnOffLevelBuilderMode);
         this.levelBuilderDock.appendChild(btn);
-
-        // let boxBtn = document.createElement('div'); 
-        // boxBtn.innerHTML = "create small box"; 
-        // boxBtn.addEventListener("click", function () { gameObjArr.push(new Box(400, 400, 125, 125, gameObjArr.length + 1))}); 
-        // this.levelBuilderDock.appendChild(boxBtn); 
 
         let objectSelectContainer = document.createElement('div');
         let select = document.createElement('select');
@@ -153,12 +156,6 @@ export class StateManager {
                     break;
             }
         });
-
-        if (this.objectIsSelected) {
-            let selectedOjectDiv = document.createElement("div"); 
-            selectedOjectDiv.innerHTML = `selected obj: ${this.selectedObject.type}`; 
-            objectSelectContainer.appendChild(selectedOjectDiv)
-        }
 
         this.levelBuilderDock.appendChild(objectSelectContainer);
     }

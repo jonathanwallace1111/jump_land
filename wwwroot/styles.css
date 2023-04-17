@@ -1,0 +1,22 @@
+#builderDock {
+    height: 300px; 
+    width: 600px; 
+    background-color: green;
+    color: black; 
+}
+
+#react-app {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+}
+
+#main {
+    position: relative;
+    z-index: 1;
+}
+
+h1 {
+    color: green;
+}
