@@ -1,14 +1,15 @@
-import { useContext, useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { GameContext } from "../GameContext";
 
-export function MainMenu() {
-    console.log("testing"); 
+export default function MainMenu() {
+    const gameContext = useContext(GameContext)
+
     return (
         <div>
-            <h1>dojo</h1>
-            <h1>level builder</h1>
-            <h1>level select</h1>
-            <h1>options</h1>
+            <h1 onClick={() => gameContext.setCurrentView(gameContext.currentViewOptions.dojo)}>dojo</h1>
+            <h1 onClick={() => gameContext.setCurrentView(gameContext.currentViewOptions.levelBuilder)}>level builder</h1>
+            <h1 onClick={() => gameContext.setCurrentView(gameContext.currentViewOptions.levelSelect)}>level select</h1>
+            <h1 onClick={() => gameContext.setCurrentView(gameContext.currentViewOptions.options)}>options</h1>
         </div>
     )
 }

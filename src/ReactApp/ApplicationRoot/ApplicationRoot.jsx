@@ -1,12 +1,12 @@
 import GameContextProvider from "../GameContext";
-import GameSystem from "../Components/GameSystem";
+import App from "../../App";
 
 export function ApplicationRoot() {
 
     return (
         <div>
             <GameContextProvider>
-                <GameSystem />
+                <App />
             </GameContextProvider>
         </div>
     );

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { GameContext } from "../GameContext";
 
-export function IntroTitle() {
+export default function IntroTitleCard() {
 
     const gameContext = useContext(GameContext); 
  

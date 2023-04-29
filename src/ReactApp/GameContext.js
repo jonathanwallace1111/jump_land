@@ -5,25 +5,30 @@ export const GameContext = React.createContext({});
 export default function GameContextProvider({ children }){
     
 
-    const displayModeTypes = {
-        title: "title",
+    const currentViewOptions = {
+        introTitleCard: "introTitleCard",
         mainMenu: "mainMenu",
+        dojo: "dojo",
+        levelBuilder: "levelBuilder",
+        levelSelect: "levelSelect",
+        options: "options",
         inGame: "inGame", 
         inGamePause: "inGamePause", 
-        levelBuilder: "levelBuilder",
     }
 
-    const [currentDisplayMode, setCurrentDisplayMode] = useState(displayModeTypes.title); 
+    const [currentView, setCurrentView] = useState(currentViewOptions.introTitleCard); 
 
     const removeTitleCardAndShowMenu = () => {
-        setCurrentDisplayMode(displayModeTypes.mainMenu)
+        setCurrentView(currentViewOptions.mainMenu)
     }
     
     return (
         <GameContext.Provider value={{
 
-            currentDisplayMode,
+            currentView,
+            currentViewOptions,
             
+            setCurrentView, 
             removeTitleCardAndShowMenu
         
         }}>{children}</GameContext.Provider>
