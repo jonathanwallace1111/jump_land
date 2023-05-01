@@ -19,7 +19,7 @@ export class LevelManager {
             //communicate with state to create key conditional that makes the goal object collectable only after all keys in key array are collected. 
         }
 
-        //I need to check if any object is a compound object and if so add them separately so that collision detection works for each 
+        // //I need to check if any object is a compound object and if so add them separately so that collision detection works for each 
         let newLevelObjects = [
             ...this.level.platforms.map(p => new Platform(p.x, p.y, p.w, p.h, p.id)),
             new Protagonist(this.level.protagonist.x, this.level.protagonist.y, this.level.protagonist.w, this.level.protagonist.h),
