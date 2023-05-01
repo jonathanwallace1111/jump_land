@@ -7,6 +7,24 @@ export default class DojoManager {
 
     }
 
+    startDojo = () => {
+        //This function relates to the function that will be called on the bridge object in the useEffect 
+        //hook on mounting
+    }
+
+    stopDojo = () => {
+        //This function relates to the function that will be called on the bridge object in the useEffect 
+        //hook on unmounting
+    }
+
+    pauseGame = () => {
+        // This function obviously needs to communicate with the bridge 
+        //stop game loop
+
+    }
+
+    unpauseGame
+
     generateRandomBoxs = () => {
         let numOfBoxes = floor(random(4, 7)); 
         let boxesArr = []; 
