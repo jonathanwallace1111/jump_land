@@ -37,7 +37,7 @@ export class RenderManager {
     // gom.draw(); 
 
     gom.background.draw(); 
-    // gom.gameObjects.forEach(obj => obj.draw()); 
+    gom.gameObjects.forEach(obj => obj.draw()); 
 
   }
 }

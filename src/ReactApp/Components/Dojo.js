@@ -5,5 +5,7 @@ import ChangeCurrentViewButton from "./ChangeCurrentViewButton";
 export default function Dojo() { 
     const gameContext = useContext(GameContext)
 
+    //
+
     return <ChangeCurrentViewButton /> 
 }

@@ -10,6 +10,9 @@ export class LevelManager {
         this.level = undefined;
     }
 
+    /* Need a function that communicates with the bridge to retrieve the json data 
+       from react side and parses it */
+
     loadLevel = (levelNumber) => {
         let gom = jlSystem.gameObjectManager;
         gom.clearObjects();

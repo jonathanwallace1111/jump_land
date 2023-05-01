@@ -16,7 +16,7 @@ export class Box extends NonProtagonistGameObject {
     touchProtagonist() { 
       this.hasTouchedProtagonistBool = true; 
       this.fillColor = this.colorObject.touchedObjectFillColor; 
-  }
+    }
   
     draw = () => {
       stroke(this.strokeColor); 
