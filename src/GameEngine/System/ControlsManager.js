@@ -102,44 +102,6 @@ export class ControlsManager {
         }
       }
 
-    // mouseIsPressed = () => {
-    //     let objArr = window.jlSystem.gameObjectManager.gameObjects;
-    //     let state = window.jlSystem.state;
-
-    //     this.newObjectCreated = false; 
-
-    //     state.selectedObject = objArr.find(obj => {
-    //         state.objectIsSelected = true; 
-    //         return (mouseX <= obj.renderPos.x + obj.w &&
-    //             mouseX >= obj.renderPos.x &&
-    //             mouseY <= obj.renderPos.y + obj.h &&
-    //             mouseY >= obj.renderPos.y);
-    //     })
-    // }
-
-    // mouseIsDragged = () => {
-    //     let state = window.jlSystem.state; 
-    //     let selectedObject = state.selectedObject;
-    //     let camera = window.jlSystem.camera;
-
-    //     if (!!selectedObject) {
-    //         selectedObject.pos.x = mouseX + camera.pos.x;
-    //         selectedObject.pos.y = mouseY + camera.pos.y;
-    //     }
-    // }
-
-    // keyIsPressed = () => {
-    //     if (this.keyCodeMap[keyCode]) {
-    //         this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
-    //     }
-    // }
-
-    // keyIsReleased = () => {
-    //     if (this.keyCodeMap[keyCode]) {
-    //         this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
-    //     }
-    // }
-
     moveLaterally = () => {
         let pe = window.jlSystem.physicsEngine;
         let state = window.jlSystem.state;
@@ -248,7 +210,7 @@ export class ControlsManager {
         }
     }
 
-    update = () => {
+    update = (deltaTime) => {
 
 
         let pe = window.jlSystem.physicsEngine;

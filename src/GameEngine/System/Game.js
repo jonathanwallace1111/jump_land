@@ -35,7 +35,7 @@ export default class Game {
         // if (this.state.inLevelBuilderMode) {
             // this.controls.levelBuilderUpdate(); 
         // } else {
-            this.controls.update();
+            this.controls.update(this.state.deltaTime);
         // }
     }
 

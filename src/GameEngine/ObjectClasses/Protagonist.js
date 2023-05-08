@@ -17,16 +17,16 @@ export class Protagonist extends PhysicalGameObject {
       this.ctx.canvas.height - (this.y - (this.h / 2))
     )
 
-    this.jumpVelocity = 3.5; 
-    this.lateralMovementVelocity = 1;
-    this.acceleration = .01
-    this.maxLateralVelocity = 1;
+    this.jumpVelocity = .35; 
+    this.lateralMovementVelocity = .1;
+    this.acceleration = .001
+    this.maxLateralVelocity = .1;
 
     this.velocity = new Vector(0, 0)
 
     this.isJumping = false;
     this.maxJumpDeltaTimeAccumulator = 0;
-    this.maxJumpDeltaTimeLimit = 175;
+    this.maxJumpDeltaTimeLimit = 75;
 
     this.onGround = false;
 
