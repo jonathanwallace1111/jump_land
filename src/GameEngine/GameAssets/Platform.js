@@ -2,8 +2,8 @@ import { NonProtagonistGameObject } from "../ObjectClasses/NonProtagonistGameObj
 import { ColorObject } from "../System/ColorObject.js";
 
 export class Platform extends NonProtagonistGameObject {
-    constructor(x, y, w, h, idNum) { 
-      super(x, y, w, h); 
+    constructor(ctx, x, y, w, h, idNum) { 
+      super(ctx, x, y, w, h); 
       
       this.colorObject = new ColorObject(); 
       this.fillColor = this.colorObject.untouchedObjectFillColor; 
@@ -19,9 +19,16 @@ export class Platform extends NonProtagonistGameObject {
   }
   
     draw = () => {
-      stroke(this.strokeColor); 
-      fill(this.fillColor);
-      // rect(this.x, this.y, this.w, this.h); 
-      rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH); 
+      // stroke(this.strokeColor); 
+      // fill(this.fillColor);
+      // rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH); 
+
+
+      this.ctx.beginPath();
+      this.ctx.strokeStyle = this.strokeColor;
+      this.ctx.fillStyle = this.fillColor;
+      this.ctx.rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH);
+      this.ctx.fill(); 
+      this.ctx.stroke();
     }
   }

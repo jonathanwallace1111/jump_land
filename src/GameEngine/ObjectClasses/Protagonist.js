@@ -4,8 +4,8 @@ import { NonProtagonistGameObject } from "./NonProtagonistGameObject.js";
 import { Vector } from "../Utilities/Vector.js"; 
 
 export class Protagonist extends PhysicalGameObject {
-  constructor(x, y, w, h) {
-    super(x, y, w, h);
+  constructor(ctx, x, y, w, h) {
+    super(ctx, x, y, w, h);
   
     this.id = "Protagonist"; 
 
@@ -14,7 +14,7 @@ export class Protagonist extends PhysicalGameObject {
       this.pos.x - (this.w / 2),
       this.pos.y - (this.h / 2),
       this.w + this.w,
-      height - (this.y - (this.h / 2))
+      this.ctx.canvas.height - (this.y - (this.h / 2))
     )
 
     this.jumpVelocity = 3.5; 
@@ -46,9 +46,17 @@ export class Protagonist extends PhysicalGameObject {
   }
 
   draw = () => {
-    stroke(this.strokeColor);
-    fill(this.fillColor);
-    rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH);
+    // stroke(this.strokeColor);
+    // fill(this.fillColor);
+    // rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH);
+
+
+    this.ctx.beginPath();
+    this.ctx.strokeStyle = this.strokeColor;
+    this.ctx.fillStyle = this.fillColor; 
+    this.ctx.rect(this.renderPos.x, this.renderPos.y, this.renderW, this.renderH);
+    this.ctx.fill(); 
+    this.ctx.stroke();
   }
 }
 

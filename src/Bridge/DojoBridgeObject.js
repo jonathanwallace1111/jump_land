@@ -1,24 +1,40 @@
-import React, { useState, useEffect, useContext} from "react";
-import { GameContext } from "../ReactApp/GameContext";
-
+import Game from "../GameEngine/System/Game"; 
 
 export default class DojoBridgeObject {
-    constructor(game) {
-        this.game = game; 
-        
-        //Notice that I'm incorporating the context as a part of the class
-        this.gameContext = useContext(GameContext) 
+    constructor() {
+        this.game = null; 
 
+        this.canvas = null; 
+        this.ctx = null; 
+        
     }
 
+    createNewCanvas = () => {
+        this.canvas = document.createElement('canvas');
+        this.canvas.width = 1500; 
+        this.canvas.height = 800; 
+        document.body.appendChild(this.canvas); 
+        this.ctx = this.canvas.getContext('2d');
+    }
+
+    destroyCanvas = () => {
+        this.canvas.remove(); 
+        this.canvas = null; 
+    }
+
+
     startDojo = () => {
-        //initialize game.dojoManager
-        //For now, I'm going to name the dojoManager function that this relates to startDojo
+        this.createNewCanvas(); 
+        this.game = new Game(this.ctx); 
+        this.game.init(); 
+
+        this.game.gameLoop(); 
     }
 
     stopDojo = () => {
-        //Shut down game
-        //For now, I'm going to name the dojoManager function that this relates to stopDojo
+
+
+        this.destroyCanvas(); 
 
     }
 

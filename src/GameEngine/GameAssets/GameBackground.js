@@ -1,8 +1,9 @@
 import { GameObject } from "../ObjectClasses/GameObject.js";
 
 export class GameBackground extends GameObject {
-    constructor(color) {
-        super(); 
+    constructor(ctx, color) {
+        super(ctx);
+
         this.color = color; 
     }
 
@@ -11,6 +12,7 @@ export class GameBackground extends GameObject {
     }
 
     draw = () => {
-        background(this.color); 
+        this.ctx.fillStyle = this.color; 
+        this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
     }
 }

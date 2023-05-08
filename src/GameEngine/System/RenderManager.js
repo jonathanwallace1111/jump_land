@@ -1,7 +1,7 @@
 
 export class RenderManager {
-  constructor() {
-    
+  constructor(ctx) {
+    this.ctx = ctx; 
   }
 
   draw = () => {
@@ -36,6 +36,8 @@ export class RenderManager {
 
     // gom.draw(); 
 
+
+    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height); 
     gom.background.draw(); 
     gom.gameObjects.forEach(obj => obj.draw()); 
 

@@ -1,3 +1,5 @@
+import p5 from 'p5';
+
 import { StateManager } from "./StateManager.js";
 import { ControlsManager } from "./ControlsManager.js";
 import { PhysicsManager } from "./PhysicsManager.js";
@@ -9,15 +11,16 @@ import { RenderManager } from "./RenderManager.js";
 // import { BridgeObject } from "../../Bridge/BridgeObject.js"; 
 
 export default class Game {
-    constructor() {
+    constructor(ctx) {
+        this.ctx = ctx; 
         this.state = new StateManager();
         this.controls = new ControlsManager();
         this.physicsEngine = new PhysicsManager();
-        this.gameObjectManager = new GameObjectManager();
-        this.dojo = new DojoManager(); 
+        this.gameObjectManager = new GameObjectManager(this.ctx);
+        this.dojo = new DojoManager(this.ctx); 
         this.levelManager = new LevelManager();
         this.camera = new Camera(); 
-        this.renderManager = new RenderManager(); 
+        this.renderManager = new RenderManager(this.ctx); 
         // this.bridge = new BridgeObject(); 
         window.jlSystem = this;
     }
@@ -52,22 +55,35 @@ export default class Game {
         //     this.gameObjectManager.update(this.state.deltaTime);
         //     this.camera.levelBuilderUpdate(); 
         // } else {
-            this.state.update(); 
-            this.updateControls();
-            this.physicsEngine.update(); 
-            this.gameObjectManager.update(this.state.deltaTime);
-            this.camera.updatePosition(); 
+
+            // this.state.update(); 
+            // this.updateControls();
+            // this.physicsEngine.update(); 
+            // this.gameObjectManager.update(this.state.deltaTime);
+            // this.camera.updatePosition(); 
+
         // }
+
+        // console.log("game.update")
     }
 
     draw = () => {
 
         this.renderManager.draw(); 
-        // this.gameObjectManager.draw();
+
+        // this.ctx.beginPath();
+        // this.ctx.lineWidth = "6";
+        // this.ctx.strokeStyle = "red";
+        // this.ctx.rect(5, 5, 290, 140);
+        // this.ctx.stroke();
+
+        // console.log("game.draw"); 
+
     }
 
     gameLoop = () => {
         this.update();
         this.draw();
+        requestAnimationFrame(this.gameLoop); 
     }
 }

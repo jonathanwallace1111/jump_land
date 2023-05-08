@@ -3,8 +3,8 @@ import { Platform } from "../GameAssets/Platform";
 import { Protagonist } from "../ObjectClasses/Protagonist";
 
 export default class DojoManager { 
-    constructor() { 
-
+    constructor(ctx) { 
+        this.ctx = ctx; 
     }
 
     startDojo = () => {
@@ -23,17 +23,23 @@ export default class DojoManager {
 
     }
 
-    unpauseGame
+    unpauseGame = () => {
+
+    }
+
+    generateRandomNumberWithinRange = (min, max) => {
+        return Math.floor(Math.random() * (max - min) + min)
+    }
 
     generateRandomBoxs = () => {
-        let numOfBoxes = floor(random(4, 7)); 
+        let numOfBoxes = this.generateRandomNumberWithinRange(4, 7); 
         let boxesArr = []; 
 
         for (let i = 0; i < numOfBoxes; i++) {
             let randomBoxPropertiesObj = {
                 //75 is an estimation of the outer boundry plus the width of the box. Definitely temporary
-                x: random(75, width - 75),
-                y: random(75, height - 75),
+                x: this.generateRandomNumberWithinRange(75, this.ctx.canvas.width - 75),
+                y: this.generateRandomNumberWithinRange(75, this.ctx.canvas.height - 75),
                 //Just putting 50 here. Might be best to create small, medium, and large boxes. Might be cleaner in instances like this
                 w: 50, 
                 h: 50, 
@@ -99,18 +105,16 @@ export default class DojoManager {
 
         for (let i = 0; i < randomBoxesParametersArray.length; i++) {
             let boxParamObj = randomBoxesParametersArray[i];
-            newLevelObjects.push(new Box(boxParamObj.x, boxParamObj.y, boxParamObj.w, boxParamObj.h, boxParamObj.idNum)); 
+            newLevelObjects.push(new Box(this.ctx, boxParamObj.x, boxParamObj.y, boxParamObj.w, boxParamObj.h, boxParamObj.idNum)); 
         }
 
         for (let i = 0; i < boundriesParametersArray.length; i++) {
             let boundry = boundriesParametersArray[i]; 
-            newLevelObjects.push(new Platform(boundry.x, boundry.y, boundry.w, boundry.h, boundry.id)); 
+            newLevelObjects.push(new Platform(this.ctx, boundry.x, boundry.y, boundry.w, boundry.h, boundry.id)); 
         }
 
-        newLevelObjects.push(new Protagonist(50, 600, 50, 50)); 
+        newLevelObjects.push(new Protagonist(this.ctx, 50, 600, 50, 50)); 
         
         gom.loadObjects(newLevelObjects); 
-
-        console.log(gom.gameObjects); 
     }
 }

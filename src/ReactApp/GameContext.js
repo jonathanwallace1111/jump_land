@@ -16,7 +16,7 @@ export default function GameContextProvider({ children }){
         inGamePause: "inGamePause", 
     }
 
-    const [currentView, setCurrentView] = useState(currentViewOptions.introTitleCard); 
+    const [currentView, setCurrentView] = useState(currentViewOptions.dojo); 
 
     const removeTitleCardAndShowMenu = () => {
         setCurrentView(currentViewOptions.mainMenu)

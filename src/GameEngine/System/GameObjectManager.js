@@ -2,10 +2,11 @@ import { GameBackground } from "../GameAssets/GameBackground.js";
 import { ColorObject } from "./ColorObject.js";
 
 export class GameObjectManager {
-    constructor() {
+    constructor(ctx) {
+        this.ctx = ctx; 
 
         this.colorObject = new ColorObject(); 
-        this.background = new GameBackground(this.colorObject.backgroundColor); 
+        this.background = new GameBackground(this.ctx, this.colorObject.backgroundColor); 
         this.gameObjects = [];
     }
 
@@ -61,6 +62,6 @@ export class GameObjectManager {
 
     draw() {
         // this.background.draw(); 
-        // this.gameObjects.forEach(gameObject => gameObject.draw());
+        this.gameObjects.forEach(gameObject => gameObject.draw());
     }
 }

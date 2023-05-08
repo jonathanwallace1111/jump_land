@@ -17,7 +17,7 @@ export class Camera {
         let protagonist = gom.getProtagonist(); 
         let state = game.state; 
 
-        this.pos.x = protagonist.pos.x - (width / 2); 
-        this.pos.y = protagonist.pos.y - (height - 200); 
+        // this.pos.x = protagonist.pos.x - (width / 2); 
+        // this.pos.y = protagonist.pos.y - (height - 200); 
     }
 }
