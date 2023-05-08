@@ -27,15 +27,15 @@ export default class DojoBridgeObject {
         this.createNewCanvas(); 
         this.game = new Game(this.ctx); 
         this.game.init(); 
+        this.setupInGameControls();
 
         this.game.gameLoop(); 
     }
 
     stopDojo = () => {
 
-
+        this.removeInGameControls(); 
         this.destroyCanvas(); 
-
     }
 
     pauseGame = () => {
@@ -47,4 +47,13 @@ export default class DojoBridgeObject {
         //The dojoManager function this relates to is also called unpauseGame
         //Needs to switch from react side controls, back to game.controlsManager 
     }
+
+    setupInGameControls = () => {
+        this.game.controls.setupInGameControls(); 
+    }
+
+    removeInGameControls = () => { 
+        this.game.controls.removeInGameControls(); 
+    }
+
 }

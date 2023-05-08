@@ -35,16 +35,48 @@ export class ControlsManager {
 
         this.newObjectCreated = false; 
 
-        window.mousePressed = this.mouseIsPressed.bind(this);
-        window.mouseDragged = this.mouseIsDragged.bind(this);
+        // window.mousePressed = this.mouseIsPressed.bind(this);
+        // window.mouseDragged = this.mouseIsDragged.bind(this);
 
-        window.keyPressed = this.keyIsPressed.bind(this);
-        window.keyReleased = this.keyIsReleased.bind(this);
+        // window.keyPressed = this.keyIsPressed.bind(this);
+        // window.keyReleased = this.keyIsReleased.bind(this);
     }
 
-    mouseIsPressed = () => {
+    setupInGameControls = () => {
+        window.addEventListener('keydown', this.handleKeyDown.bind(this));
+        window.addEventListener('keyup', this.handleKeyUp.bind(this));
+
+        //Mouse events were for levelBuilder and I'm not there yet
+        // window.addEventListener('mousedown', this.handleMouseDown.bind(this));
+        // window.addEventListener('mousemove', this.handleMouseMove.bind(this));
+    }
+
+    removeInGameControls = () => {
+        window.removeEventListener('keydown', this.handleKeyDown.bind(this));
+        window.removeEventListener('keyup', this.handleKeyUp.bind(this));
+
+        //Mouse events were for levelBuilder and I'm not there yet
+        // window.removeEventListener('mousedown', this.handleMouseDown.bind(this));
+        // window.removeEventListener('mousemove', this.handleMouseMove.bind(this));
+    }
+
+    handleKeyDown(event) {
+        if (this.keyCodeMap[event.keyCode]) {
+            this.liveKeyMap[this.keyCodeMap[event.keyCode]] = true;
+        }
+      }
+    
+      handleKeyUp(event) {
+        if (this.keyCodeMap[event.keyCode]) {
+            this.liveKeyMap[this.keyCodeMap[event.keyCode]] = false;
+        }
+      }
+    
+      handleMouseDown(event) {
         let objArr = window.jlSystem.gameObjectManager.gameObjects;
         let state = window.jlSystem.state;
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
 
         this.newObjectCreated = false; 
 
@@ -55,30 +87,58 @@ export class ControlsManager {
                 mouseY <= obj.renderPos.y + obj.h &&
                 mouseY >= obj.renderPos.y);
         })
-    }
-
-    mouseIsDragged = () => {
+      }
+    
+      handleMouseMove(event) {
         let state = window.jlSystem.state; 
         let selectedObject = state.selectedObject;
         let camera = window.jlSystem.camera;
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
 
         if (!!selectedObject) {
             selectedObject.pos.x = mouseX + camera.pos.x;
             selectedObject.pos.y = mouseY + camera.pos.y;
         }
-    }
+      }
 
-    keyIsPressed = () => {
-        if (this.keyCodeMap[keyCode]) {
-            this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
-        }
-    }
+    // mouseIsPressed = () => {
+    //     let objArr = window.jlSystem.gameObjectManager.gameObjects;
+    //     let state = window.jlSystem.state;
 
-    keyIsReleased = () => {
-        if (this.keyCodeMap[keyCode]) {
-            this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
-        }
-    }
+    //     this.newObjectCreated = false; 
+
+    //     state.selectedObject = objArr.find(obj => {
+    //         state.objectIsSelected = true; 
+    //         return (mouseX <= obj.renderPos.x + obj.w &&
+    //             mouseX >= obj.renderPos.x &&
+    //             mouseY <= obj.renderPos.y + obj.h &&
+    //             mouseY >= obj.renderPos.y);
+    //     })
+    // }
+
+    // mouseIsDragged = () => {
+    //     let state = window.jlSystem.state; 
+    //     let selectedObject = state.selectedObject;
+    //     let camera = window.jlSystem.camera;
+
+    //     if (!!selectedObject) {
+    //         selectedObject.pos.x = mouseX + camera.pos.x;
+    //         selectedObject.pos.y = mouseY + camera.pos.y;
+    //     }
+    // }
+
+    // keyIsPressed = () => {
+    //     if (this.keyCodeMap[keyCode]) {
+    //         this.liveKeyMap[this.keyCodeMap[keyCode]] = true;
+    //     }
+    // }
+
+    // keyIsReleased = () => {
+    //     if (this.keyCodeMap[keyCode]) {
+    //         this.liveKeyMap[this.keyCodeMap[keyCode]] = false;
+    //     }
+    // }
 
     moveLaterally = () => {
         let pe = window.jlSystem.physicsEngine;
@@ -189,6 +249,8 @@ export class ControlsManager {
     }
 
     update = () => {
+
+
         let pe = window.jlSystem.physicsEngine;
         let state = window.jlSystem.state;
         let gravityDirection = state.gravityDirection;
@@ -198,6 +260,8 @@ export class ControlsManager {
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
         });
+
+
 
         if (this.liveKeyMap["f"]) {
             state.inLevelBuilderMode = true; 

@@ -41,14 +41,6 @@ export default class Game {
 
     update = () => {
 
-        // if (this.bridge.incomingBool) {
-            // this.bridge.incoming(); 
-        // }
-
-        // if (this.bridge.outgoingBool) {
-            // this.bridge.outgoing(); 
-        // }
-
         // if (this.state.inLevelBuilderMode) {
         //     this.state.update(); 
         //     this.updateControls();
@@ -56,11 +48,11 @@ export default class Game {
         //     this.camera.levelBuilderUpdate(); 
         // } else {
 
-            // this.state.update(); 
-            // this.updateControls();
-            // this.physicsEngine.update(); 
-            // this.gameObjectManager.update(this.state.deltaTime);
-            // this.camera.updatePosition(); 
+            this.state.update(); 
+            this.updateControls();
+            this.physicsEngine.update(); 
+            this.gameObjectManager.update(this.state.deltaTime);
+            this.camera.updatePosition(); 
 
         // }
 
@@ -68,17 +60,7 @@ export default class Game {
     }
 
     draw = () => {
-
         this.renderManager.draw(); 
-
-        // this.ctx.beginPath();
-        // this.ctx.lineWidth = "6";
-        // this.ctx.strokeStyle = "red";
-        // this.ctx.rect(5, 5, 290, 140);
-        // this.ctx.stroke();
-
-        // console.log("game.draw"); 
-
     }
 
     gameLoop = () => {

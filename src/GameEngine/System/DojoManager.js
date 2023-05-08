@@ -38,8 +38,13 @@ export default class DojoManager {
         for (let i = 0; i < numOfBoxes; i++) {
             let randomBoxPropertiesObj = {
                 //75 is an estimation of the outer boundry plus the width of the box. Definitely temporary
-                x: this.generateRandomNumberWithinRange(75, this.ctx.canvas.width - 75),
-                y: this.generateRandomNumberWithinRange(75, this.ctx.canvas.height - 75),
+                //Also, this is based of canvas width and height and it should be based on the boundries.
+                // x: this.generateRandomNumberWithinRange(75, this.ctx.canvas.width - 75),
+                // y: this.generateRandomNumberWithinRange(75, this.ctx.canvas.height - 75),
+
+                x: this.generateRandomNumberWithinRange(75, 780 - 75),
+                y: this.generateRandomNumberWithinRange(75, 780 - 75),
+
                 //Just putting 50 here. Might be best to create small, medium, and large boxes. Might be cleaner in instances like this
                 w: 50, 
                 h: 50, 
