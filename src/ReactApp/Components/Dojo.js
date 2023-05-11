@@ -9,15 +9,16 @@ export default function Dojo() {
     const gameContext = useContext(GameContext)
 
     useEffect(() => {
-        const bridge = new DojoBridgeObject();  
+        const bridge = new DojoBridgeObject(gameContext.setCurrentView);  
         bridge.startDojo(); 
 
         return () => {
             bridge.stopDojo(); 
         }
-        
+
     }, []); 
 
 
-    return <ChangeCurrentViewButton /> 
+    // return <ChangeCurrentViewButton /> 
+    return 
 }

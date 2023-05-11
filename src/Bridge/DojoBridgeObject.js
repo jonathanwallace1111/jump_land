@@ -1,9 +1,11 @@
 import Game from "../GameEngine/System/Game"; 
 
-export default class DojoBridgeObject {
-    constructor() {
+export default class DojoBridgeObject {   
+    constructor(setCurrentView) {
         this.game = null; 
 
+        this.setCurrentView = setCurrentView; 
+        
         this.canvas = null; 
         this.ctx = null; 
         
@@ -25,7 +27,7 @@ export default class DojoBridgeObject {
 
     startDojo = () => {
         this.createNewCanvas(); 
-        this.game = new Game(this.ctx); 
+        this.game = new Game(this.ctx, this.setCurrentView); 
         this.game.init(); 
         this.setupInGameControls();
 
@@ -41,6 +43,8 @@ export default class DojoBridgeObject {
     pauseGame = () => {
         //The dojoManager function this relates to is also called pauseGame
         //Needs to switch from game.controlsManager to the react side controls 
+        // this.setCurrentView("mainMenu"); 
+        console.log(this.setCurrentView); 
     }
 
     unpauseGame = () => {

@@ -1,6 +1,6 @@
 // import { Camera } from "./Camera";
 import { Box } from "../GameAssets/Box.js"
-import { Platform } from "../GameAssets/Platform.js"; 
+import { Platform } from "../GameAssets/Platform.js";
 import { DeathStake } from "../GameAssets/DeathStake.js"
 import { GoalObject } from "../GameAssets/GoalObject.js"
 
@@ -14,6 +14,8 @@ export class ControlsManager {
             38: 'up',
             39: 'right',
             40: 'down',
+            32: 'space',
+            9: 'tab',
             82: 'r',
         }
 
@@ -22,6 +24,8 @@ export class ControlsManager {
             down: false,
             left: false,
             right: false,
+            space: false,
+            tab: false,
             r: false,
         };
 
@@ -30,10 +34,22 @@ export class ControlsManager {
             down: false,
             left: false,
             right: false,
+            space: false, 
+            tab: false,
             r: false,
         };
 
-        this.newObjectCreated = false; 
+        this.keysHandled = {
+            up: false,
+            down: false,
+            left: false,
+            right: false,
+            space: false, 
+            tab: false,
+            r: false,  
+        }
+
+        this.newObjectCreated = false;
 
         // window.mousePressed = this.mouseIsPressed.bind(this);
         // window.mouseDragged = this.mouseIsDragged.bind(this);
@@ -64,33 +80,34 @@ export class ControlsManager {
         if (this.keyCodeMap[event.keyCode]) {
             this.liveKeyMap[this.keyCodeMap[event.keyCode]] = true;
         }
-      }
-    
-      handleKeyUp(event) {
+    }
+
+    handleKeyUp(event) {
         if (this.keyCodeMap[event.keyCode]) {
             this.liveKeyMap[this.keyCodeMap[event.keyCode]] = false;
+            this.keysHandled[this.keyCodeMap[event.keyCode]] = false;
         }
-      }
-    
-      handleMouseDown(event) {
+    }
+
+    handleMouseDown(event) {
         let objArr = window.jlSystem.gameObjectManager.gameObjects;
         let state = window.jlSystem.state;
         const mouseX = event.clientX;
         const mouseY = event.clientY;
 
-        this.newObjectCreated = false; 
+        this.newObjectCreated = false;
 
         state.selectedObject = objArr.find(obj => {
-            state.objectIsSelected = true; 
+            state.objectIsSelected = true;
             return (mouseX <= obj.renderPos.x + obj.w &&
                 mouseX >= obj.renderPos.x &&
                 mouseY <= obj.renderPos.y + obj.h &&
                 mouseY >= obj.renderPos.y);
         })
-      }
-    
-      handleMouseMove(event) {
-        let state = window.jlSystem.state; 
+    }
+
+    handleMouseMove(event) {
+        let state = window.jlSystem.state;
         let selectedObject = state.selectedObject;
         let camera = window.jlSystem.camera;
         const mouseX = event.clientX;
@@ -100,7 +117,7 @@ export class ControlsManager {
             selectedObject.pos.x = mouseX + camera.pos.x;
             selectedObject.pos.y = mouseY + camera.pos.y;
         }
-      }
+    }
 
     moveLaterally = () => {
         let pe = window.jlSystem.physicsEngine;
@@ -142,7 +159,7 @@ export class ControlsManager {
 
     jump = () => {
         let pe = window.jlSystem.physicsEngine;
-        let state = window.jlSystem.state; 
+        let state = window.jlSystem.state;
         let gravityDirection = state.gravityDirection;
         let gravOpposite = state.gravOpposite;
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist();
@@ -176,9 +193,9 @@ export class ControlsManager {
 
     levelBuilderUpdate = () => {
         let camera = window.jlSystem.camera;
-        let state = window.jlSystem.state; 
+        let state = window.jlSystem.state;
         let gameObjArr = window.jlSystem.gameObjectManager.gameObjects;
-        let globalState = window.jlSystem.state; 
+        let globalState = window.jlSystem.state;
 
         Object.values(this.keyCodeMap).forEach(key => {
             this.controlMap[key] = this.liveKeyMap[key];
@@ -204,7 +221,7 @@ export class ControlsManager {
             if (state.objectIsSelected) {
                 if (!this.newObjectCreated) {
                     this.newObjectCreated = true;
-                    state.selectedObject.rotate(); 
+                    state.selectedObject.rotate();
                 }
             }
         }
@@ -223,24 +240,36 @@ export class ControlsManager {
             this.controlMap[key] = this.liveKeyMap[key];
         });
 
+        if (this.liveKeyMap["space"] && !this.keysHandled.space) {
+            window.jlSystem.togglePause();
 
+            this.keysHandled.space = true;
 
-        if (this.liveKeyMap["f"]) {
-            state.inLevelBuilderMode = true; 
         }
 
-        if (this.liveKeyMap[gravOpposite] && !protagonist.isJumping) {
-            protagonist.maxJumpDeltaTimeAccumulator += deltaTime;
-            if (protagonist.maxJumpDeltaTimeAccumulator < protagonist.maxJumpDeltaTimeLimit) {
-                this.jump();
+        if (!state.paused) {
+            if (this.liveKeyMap["tab"]) {
+
             }
-        }
 
-        if (this.liveKeyMap[state.lateralDirections.a] || this.liveKeyMap[state.lateralDirections.b]) {
-            this.moveLaterally();
-        }
+            if (this.liveKeyMap["f"]) {
+                state.inLevelBuilderMode = true;
+            }
 
-        protagonist.pos.x += protagonist.velocity.x;
-        protagonist.pos.y += protagonist.velocity.y;
+            if (this.liveKeyMap[gravOpposite] && !protagonist.isJumping) {
+                protagonist.maxJumpDeltaTimeAccumulator += deltaTime;
+                if (protagonist.maxJumpDeltaTimeAccumulator < protagonist.maxJumpDeltaTimeLimit) {
+                    this.jump();
+                }
+            }
+
+            if (this.liveKeyMap[state.lateralDirections.a] || this.liveKeyMap[state.lateralDirections.b]) {
+                this.moveLaterally();
+            }
+
+            protagonist.pos.x += protagonist.velocity.x;
+            protagonist.pos.y += protagonist.velocity.y;
+
+        }
     }
 }
