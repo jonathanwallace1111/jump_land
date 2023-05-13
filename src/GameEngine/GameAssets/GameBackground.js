@@ -4,6 +4,8 @@ export class GameBackground extends GameObject {
     constructor(ctx, color) {
         super(ctx);
 
+        // this.ctx = ctx; 
+
         this.color = color; 
     }
 

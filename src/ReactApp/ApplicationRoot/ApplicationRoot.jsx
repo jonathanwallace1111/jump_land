@@ -4,10 +4,8 @@ import App from "../../App";
 export function ApplicationRoot() {
 
     return (
-        <div>
             <GameContextProvider>
                 <App />
             </GameContextProvider>
-        </div>
     );
 }

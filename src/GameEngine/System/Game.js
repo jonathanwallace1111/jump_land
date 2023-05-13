@@ -12,28 +12,33 @@ import { RenderManager } from "./RenderManager.js";
 import DojoBridgeObject from '../../Bridge/DojoBridgeObject.js';
 
 export default class Game {
-    constructor(ctx /*, setCurrentView */) {
-        this.ctx = ctx;
-        this.state = new StateManager();
-        this.controls = new ControlsManager();
-        this.physicsEngine = new PhysicsManager();
-        this.gameObjectManager = new GameObjectManager(this.ctx);
-        this.dojo = new DojoManager(this.ctx);
-        this.levelManager = new LevelManager();
-        this.camera = new Camera();
-        this.renderManager = new RenderManager(this.ctx);
-        // this.bridge = new BridgeObject(); 
-        this.bridge = new DojoBridgeObject(); 
-        window.jlSystem = this;
+    constructor(ctx, reactBridge) {
+
+            this.ctx = ctx;
+            this.state = new StateManager();
+            this.controls = new ControlsManager();
+            this.physicsEngine = new PhysicsManager();
+            this.gameObjectManager = new GameObjectManager(this.ctx);
+            this.dojo = new DojoManager(this.ctx);
+            this.levelManager = new LevelManager(this.ctx);
+            this.camera = new Camera();
+            this.renderManager = new RenderManager(this.ctx);
+            // this.bridge = new BridgeObject(); 
+            // this.bridge = new DojoBridgeObject(); 
+            window.jlSystem = this;
+    
+            this.reactBridge = reactBridge;
 
         // this.setCurrentView = setCurrentView; 
     }
 
     init = () => {
-        this.dojo.createNewLevel();
+        if (this.dojo?.createNewLevel) this.dojo.createNewLevel();
         // this.levelManager.loadLevel(1); 
         // this.state.init(); 
     }
+
+    updateReactBridge = (reactBridge) => { this.reactBridge = reactBridge; }
 
     togglePause = () => {
         this.state.paused = !this.state.paused;
@@ -47,12 +52,12 @@ export default class Game {
     }
 
     pauseGame = () => {
-        this.bridge.pauseGame(); 
-        // this.setCurrentView(); 
+        //this.bridge.pauseGame(); 
+        this.reactBridge.setCurrentView(); 
     }
 
     unpauseGame = () => {
-        this.bridge.unpauseGame(); 
+        //this.bridge.unpauseGame(); 
     }
 
     updateControls = () => {

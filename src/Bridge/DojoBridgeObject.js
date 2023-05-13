@@ -1,33 +1,33 @@
 import Game from "../GameEngine/System/Game"; 
 
 export default class DojoBridgeObject {   
-    constructor(setCurrentView) {
+    constructor(canvasRef) {
         this.game = null; 
 
-        this.setCurrentView = setCurrentView; 
+        this.ctx = canvasRef.getContext('2d'); 
         
         this.canvas = null; 
         this.ctx = null; 
         
     }
 
-    createNewCanvas = () => {
-        this.canvas = document.createElement('canvas');
-        this.canvas.width = 1500; 
-        this.canvas.height = 800; 
-        document.body.appendChild(this.canvas); 
-        this.ctx = this.canvas.getContext('2d');
-    }
+    // createNewCanvas = () => {
+    //     this.canvas = document.createElement('canvas');
+    //     this.canvas.width = 1500; 
+    //     this.canvas.height = 800; 
+    //     document.body.appendChild(this.canvas); 
+    //     this.ctx = this.canvas.getContext('2d');
+    // }
 
-    destroyCanvas = () => {
-        this.canvas.remove(); 
-        this.canvas = null; 
-    }
+    // destroyCanvas = () => {
+    //     this.canvas.remove(); 
+    //     this.canvas = null; 
+    // }
 
 
     startDojo = () => {
-        this.createNewCanvas(); 
-        this.game = new Game(this.ctx, this.setCurrentView); 
+        // this.createNewCanvas(); 
+        this.game = new Game(this.ctx); 
         this.game.init(); 
         this.setupInGameControls();
 
@@ -37,7 +37,7 @@ export default class DojoBridgeObject {
     stopDojo = () => {
 
         this.removeInGameControls(); 
-        this.destroyCanvas(); 
+        // this.destroyCanvas(); 
     }
 
     pauseGame = () => {

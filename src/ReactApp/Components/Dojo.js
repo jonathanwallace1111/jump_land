@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
 import { GameEngineInit } from "../../GameEngine/GameEngineInit";
 import { GameContext } from "../GameContext";
 import DojoBridgeObject from "../../Bridge/DojoBridgeObject";
@@ -8,17 +8,43 @@ import ChangeCurrentViewButton from "./ChangeCurrentViewButton";
 export default function Dojo() { 
     const gameContext = useContext(GameContext)
 
-    useEffect(() => {
-        const bridge = new DojoBridgeObject(gameContext.setCurrentView);  
-        bridge.startDojo(); 
+    const canvasRef = useRef(null);
 
-        return () => {
-            bridge.stopDojo(); 
+    const [ctx, setCtx] = useState(null);
+    const [game, setGame] = useState(null);
+
+    // useEffect(() => {
+    //     GameEngineInit(game);
+    // }, []);
+
+    useEffect(() => {
+        if (canvasRef.current) {
+            setCtx(() => {
+                const nCtx = canvasRef.current.getContext('2d');
+                setGame(new Game(nCtx, gameContext))
+
+            })
         }
 
-    }, []); 
+    }, [canvasRef.current]); 
 
+    useEffect(() => {
+        if (canvasRef.current && game) {
+            game.init();
+            game.controls.setupInGameControls()
+            game.gameLoop(); 
 
-    // return <ChangeCurrentViewButton /> 
-    return 
+            return () => {
+                game.controls.removeInGameControls();
+            }
+        }
+    }, [game]);
+
+    useEffect(() => {
+        if (canvasRef.current && game) {
+            game.updateReactBridge(gameContext);
+        }
+    }, [gameContext]);
+
+    return <canvas ref={canvasRef} width={1500} height={800} />
 }

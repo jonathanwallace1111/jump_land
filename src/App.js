@@ -31,13 +31,9 @@ export default function App() {
                 return <Options /> 
                 // break;
             default: 
-                break; 
+                return <Dojo /> 
         }
     }
 
-    return (
-        <div>
-            {getView()}
-        </div> 
-    )
+    return getView();
 };
