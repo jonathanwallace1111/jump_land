@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { GameContext } from "../GameContext";
+import { GameContext } from "../GameContext.jsx";
 
 export default function MainMenu() {
     const gameContext = useContext(GameContext)

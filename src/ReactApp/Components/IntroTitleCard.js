@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { GameContext } from "../GameContext";
+import { GameContext } from "../GameContext.jsx";
 
 export default function IntroTitleCard() {
 

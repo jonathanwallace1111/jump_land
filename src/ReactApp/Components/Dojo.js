@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
-import { GameContext } from "../GameContext";
-import DojoBridgeObject from "../../Bridge/DojoBridgeObject";
+import { GameContext } from "../GameContext.jsx";
 import Game from "../../GameEngine/System/Game"; 
-import ChangeCurrentViewButton from "./ChangeCurrentViewButton"; 
 
 export default function Dojo() { 
     const gameContext = useContext(GameContext)

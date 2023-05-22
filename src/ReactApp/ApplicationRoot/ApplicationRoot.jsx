@@ -1,5 +1,5 @@
-import GameContextProvider from "../GameContext";
-import App from "../../App";
+import GameContextProvider from "../GameContext.jsx";
+import App from "./App";
 
 export function ApplicationRoot() {
 
