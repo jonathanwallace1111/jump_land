@@ -1,10 +1,10 @@
 import React from "react";
-import { Router } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { AppRoutes } from "./AppRoutes";
 
 export default function App() {
 
-    const baseUrl = "http://localhost:8080"
+    const baseUrl = "/"
 
     return (
         <Router basename={baseUrl}>

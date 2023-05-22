@@ -15,37 +15,37 @@ export function AppRoutes() {
         <Routes>
             <Route
                 key={location.key}
-                pathname="/introTitleCard"
+                path="/introTitleCard"
                 element={<IntroTitleCard />}
             />
             <Route
                 key={location.key}
-                pathname="/mainMenu"
+                path="/mainMenu"
                 element={<MainMenu />}
             />
             <Route
                 key={location.key}
-                pathname="/dojo"
+                path="/dojo"
                 element={<Dojo />}
             />
             <Route
                 key={location.key}
-                pathname="/levelBuilder"
+                path="/levelBuilder"
                 element={<LevelBuilder />}
             />
             <Route
                 key={location.key}
-                pathname="/levelSelect"
+                path="/levelSelect"
                 element={<LevelSelect />}
             />
             <Route
                 key={location.key}
-                pathname="/options"
+                path="/options"
                 element={<Options />}
             />
             <Route
                 key={location.key}
-                pathname="*"
+                path="*"
                 element={<Dojo />}
             />
         </Routes>

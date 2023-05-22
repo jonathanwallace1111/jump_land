@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "author": "J Wallace",
   "scripts": {
-    "start": "live-server ./wwwroot",
+    "start": "live-server ./wwwroot --port=8080 --entry-file=./index.html",
     "dev": "webpack --mode=development --watch"
   },
   "license": "ISC",

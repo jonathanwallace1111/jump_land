@@ -3,3 +3,5 @@ node_modules/
 wwwroot/*.min.js
 wwwroot/*.min.js.map
 .vs/
+.vscode/
+!.vscode/launch.json
