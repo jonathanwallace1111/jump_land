@@ -1,2 +1,4 @@
 out/
 node_modules/
+wwwroot/*.min.js
+.vs/
