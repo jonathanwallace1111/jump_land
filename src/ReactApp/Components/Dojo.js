@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
-import { GameEngineInit } from "../../GameEngine/GameEngineInit";
 import { GameContext } from "../GameContext";
 import DojoBridgeObject from "../../Bridge/DojoBridgeObject";
 import Game from "../../GameEngine/System/Game"; 
@@ -7,22 +6,15 @@ import ChangeCurrentViewButton from "./ChangeCurrentViewButton";
 
 export default function Dojo() { 
     const gameContext = useContext(GameContext)
-
     const canvasRef = useRef(null);
-
     const [ctx, setCtx] = useState(null);
     const [game, setGame] = useState(null);
-
-    // useEffect(() => {
-    //     GameEngineInit(game);
-    // }, []);
 
     useEffect(() => {
         if (canvasRef.current) {
             setCtx(() => {
-                const nCtx = canvasRef.current.getContext('2d');
-                setGame(new Game(nCtx, gameContext))
-
+                const newCtx = canvasRef.current.getContext('2d');
+                setGame(new Game(newCtx, gameContext))
             })
         }
 

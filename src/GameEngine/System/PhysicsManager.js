@@ -26,23 +26,23 @@ export class PhysicsManager {
         }
     }
 
-    applyGravityToProtagonist = () => {
+    applyGravityToProtagonist = (dt) => {
         let state = window.jlSystem.state; 
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
 
         if (!protagonist.onGround) {
             switch (state.gravityDirection) {
                 case "up":
-                    protagonist.velocity.y -= state.gravityStrength;
+                    protagonist.velocity.y -= state.gravityStrength * dt / 1000;
                     break;
                 case "down":
-                    protagonist.velocity.y += state.gravityStrength;
+                    protagonist.velocity.y += state.gravityStrength * dt / 1000;
                     break;
                 case "left":
-                    protagonist.velocity.x  -= state.gravityStrength;
+                    protagonist.velocity.x  -= state.gravityStrength * dt / 1000;
                     break;
                 case "right":
-                    protagonist.velocity.x  += state.gravityStrength;
+                    protagonist.velocity.x  += state.gravityStrength * dt / 1000;
                     break;
                 default:
                     break;
@@ -50,12 +50,12 @@ export class PhysicsManager {
         }
     }
 
-    applyFrictionToObject = () => {
+    applyFrictionToObject = (dt) => {
         object.velocity.x  *= 0.9;
         object.velocity.y *= 0.9;
     }
 
-    applyFrictionToProtagonist = () => {
+    applyFrictionToProtagonist = (dt) => {
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
         protagonist.velocity.x  *= 0.9;
         protagonist.velocity.y *= 0.9;
@@ -204,7 +204,7 @@ export class PhysicsManager {
         }
     }
 
-    metaCollisionDetectionForProtagonist = () => {
+    metaCollisionDetectionForProtagonist = (dt) => {
         let protagonist = window.jlSystem.gameObjectManager.getProtagonist(); 
         let gameObjects = window.jlSystem.gameObjectManager.getAllObjectsExceptProtagonist(); 
         let state = window.jlSystem.state; 
@@ -349,10 +349,10 @@ export class PhysicsManager {
         lm.loadLevel(1); 
     }
 
-    update = () => {
-        this.applyGravityToProtagonist(); 
-        this.applyFrictionToProtagonist(); 
-        this.metaCollisionDetectionForProtagonist(); 
+    update = (dt) => {
+        this.applyGravityToProtagonist(dt); 
+        this.applyFrictionToProtagonist(dt); 
+        this.metaCollisionDetectionForProtagonist(dt); 
     }
 }
 

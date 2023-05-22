@@ -12,7 +12,7 @@ import { RenderManager } from "./RenderManager.js";
 import DojoBridgeObject from '../../Bridge/DojoBridgeObject.js';
 
 export default class Game {
-    constructor(ctx, reactBridge) {
+    constructor(ctx, reactContext) {
 
             this.ctx = ctx;
             this.state = new StateManager();
@@ -27,7 +27,7 @@ export default class Game {
             // this.bridge = new DojoBridgeObject(); 
             window.jlSystem = this;
     
-            this.reactBridge = reactBridge;
+            this.reactContext = reactContext;
 
         // this.setCurrentView = setCurrentView; 
     }
@@ -44,7 +44,7 @@ export default class Game {
         this.state.paused = !this.state.paused;
 
         if (this.state.paused) {
-            console.log("game.togglepause puase conditional");
+            // console.log("game.togglepause puase conditional");
             this.pauseGame(); 
         } else if (!this.state.paused) {
             this.unpauseGame(); 
@@ -53,7 +53,9 @@ export default class Game {
 
     pauseGame = () => {
         //this.bridge.pauseGame(); 
-        this.reactBridge.setCurrentView(); 
+        console.log("game.pauseGame()");
+
+        this.reactBridge.setCurrentView(this.reactBridge.currentViewOptions.mainMenu); 
     }
 
     unpauseGame = () => {
@@ -81,7 +83,7 @@ export default class Game {
 
         if (!this.state.paused) {
             this.state.update();
-            this.physicsEngine.update();
+            this.physicsEngine.update(this.state.deltaTime);
             this.gameObjectManager.update(this.state.deltaTime);
             this.camera.updatePosition();
         }

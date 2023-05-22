@@ -5,7 +5,7 @@ import { GoalObject } from "../GameAssets/GoalObject.js"
 
 export class StateManager {
     constructor() {
-        this.gravityStrength = .40;
+        this.gravityStrength = 50;
         this.gravityDirection = "down";
         this.gravOpposite = "up";
 
