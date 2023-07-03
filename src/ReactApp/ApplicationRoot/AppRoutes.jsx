@@ -1,11 +1,21 @@
 import { useLocation } from "react-router-dom";
 import { Routes, Route } from 'react-router';
 import IntroTitleCard from "../Components/IntroTitleCard";
-import MainMenu from "../Components/MainMenu";
+import MainMenu from "../Components/MainMenu/MainMenu";
 import Dojo from "../Components/Dojo";
 import LevelBuilder from "../Components/LevelBuilder";
 import LevelSelect from "../Components/LevelSelect";
 import Options from "../Components/Options";
+
+export const AppRoutePaths = {
+    Intro: "/introTitleCard",
+    MainMenu: "/mainMenu",
+    Dojo: "/dojo",
+    LevelBuilder: "/levelBuilder",
+    LevelSelect: "/levelSelect",
+    Options: "/options",
+    Default: "/",
+}
 
 export function AppRoutes() {
 
@@ -15,37 +25,37 @@ export function AppRoutes() {
         <Routes>
             <Route
                 key={location.key}
-                path="/introTitleCard"
+                path={AppRoutePaths.Intro}
                 element={<IntroTitleCard />}
             />
             <Route
                 key={location.key}
-                path="/mainMenu"
+                path={AppRoutePaths.MainMenu}
                 element={<MainMenu />}
             />
             <Route
                 key={location.key}
-                path="/dojo"
+                path={AppRoutePaths.Dojo}
                 element={<Dojo />}
             />
             <Route
                 key={location.key}
-                path="/levelBuilder"
+                path={AppRoutePaths.LevelBuilder}
                 element={<LevelBuilder />}
             />
             <Route
                 key={location.key}
-                path="/levelSelect"
+                path={AppRoutePaths.LevelSelect}
                 element={<LevelSelect />}
             />
             <Route
                 key={location.key}
-                path="/options"
+                path={AppRoutePaths.Options}
                 element={<Options />}
             />
             <Route
                 key={location.key}
-                path="*"
+                path={"*"}
                 element={<Dojo />}
             />
         </Routes>

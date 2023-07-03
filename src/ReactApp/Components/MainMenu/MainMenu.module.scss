@@ -1,0 +1,12 @@
+.link-outer {
+    text-decoration: none;
+    color: unset;
+
+    &:link {
+        text-decoration: none;
+    }
+
+    &:hover {
+        text-decoration: none;
+    }
+}
