@@ -56,7 +56,7 @@ export function AppRoutes() {
             <Route
                 key={location.key}
                 path={"*"}
-                element={<Dojo />}
+                element={<MainMenu />}
             />
         </Routes>
     )
