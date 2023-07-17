@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { GameContext } from "../../GameContext.jsx";
+import { GameContext } from "../../Contexts/GameContext.jsx";
 import { Link } from "react-router-dom";
 
 import { AppRoutePaths } from '../../ApplicationRoot/AppRoutes';

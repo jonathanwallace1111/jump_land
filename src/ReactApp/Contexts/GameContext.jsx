@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
-import Game from "../GameEngine/System/Game";
+import Game from "../../GameEngine/System/Game";
 
 export const GameContext = React.createContext({});
 
-export default function GameContextProvider({ children }){
+export default function GameContextProvider({ children }) {
 
     const providerValueRef = useRef({})
 

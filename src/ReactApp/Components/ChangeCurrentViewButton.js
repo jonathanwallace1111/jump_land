@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { GameContext } from "../GameContext.jsx";
+import { GameContext } from "../Contexts/GameContext.jsx";
 
 export default function ChangeCurrentViewButton() { 
     const gameContext = useContext(GameContext)

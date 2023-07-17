@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, useRef, useMemo } from "react";
-import { GameContext } from "../GameContext.jsx";
+import { GameContext } from "../Contexts/GameContext.jsx";
 import Game from "../../GameEngine/System/Game"; 
 
 export default function Dojo() { 
