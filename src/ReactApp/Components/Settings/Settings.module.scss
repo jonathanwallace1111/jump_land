@@ -1,0 +1,75 @@
+.settings-display {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+
+    .title-container {
+        display: flex;
+        flex-direction: row;
+        border-right: solid 0.2rem var(--c-bg-l);
+        border-bottom: solid 0.2rem var(--c-bg-l);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        width: 20rem;
+        max-width: 100%;
+
+        .title-icon, .title-text{
+            color: var(--c-bg-l);
+            line-height: 1;
+        }
+        
+        .title-icon {
+            font-size: 1.5rem;
+        }
+        
+        .title-text {
+            font-size: 1.5rem;
+            font-family: var(--f-title);
+        }
+    }
+
+    .settings-body {
+        flex: 1 1 0rem;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+
+    .settings-footer {
+        display: flex;
+        flex-direction: row;
+        border-top: solid 0.2rem var(--c-bg-l);
+        border-left: solid 0.2rem var(--c-bg-l);
+        padding: 1rem 2rem;
+        gap: 1rem;
+        max-width: 100%;
+        margin-left: auto;
+
+        button {
+            font-size: 1.2rem;
+            color: var(--c-bg-l);
+            transition: color 0.2s ease-out;
+            padding: 0.5rem 2.5rem;
+
+            &:hover {
+                color: var(--c-accent);
+            }
+        }
+    }
+}
+
+.settings-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: var(--c-bg-d);
+    border-left: solid 1rem var(--c-primary);
+    border-right: solid 1rem var(--c-primary);
+    border-top: solid 1rem var(--c-secondary);
+    border-bottom: solid 1rem var(--c-secondary);
+}
