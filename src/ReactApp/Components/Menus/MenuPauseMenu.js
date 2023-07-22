@@ -55,8 +55,8 @@ export function MenuPauseMenu() {
         },
         {
             "icon": faGear,
-            "name": "Options",
-            "path": AppRoutePaths.Options
+            "name": "Settings",
+            "path": AppRoutePaths.Settings
         }
     ]
 

@@ -5,7 +5,7 @@ import MainMenu from "../Components/MainMenu/MainMenu";
 import Dojo from "../Components/Dojo";
 import LevelBuilder from "../Components/LevelBuilder";
 import LevelSelect from "../Components/LevelSelect";
-import Options from "../Components/Options";
+import { SettingsPage } from "../Components/Settings/SettingsDisplay";
 
 export const AppRoutePaths = {
     Intro: "/introTitleCard",
@@ -13,7 +13,7 @@ export const AppRoutePaths = {
     Dojo: "/dojo",
     LevelBuilder: "/levelBuilder",
     LevelSelect: "/levelSelect",
-    Options: "/options",
+    Settings: "/settings",
     Default: "/",
 }
 
@@ -50,8 +50,8 @@ export function AppRoutes() {
             />
             <Route
                 key={location.key}
-                path={AppRoutePaths.Options}
-                element={<Options />}
+                path={AppRoutePaths.Settings}
+                element={<SettingsPage />}
             />
             <Route
                 key={location.key}
