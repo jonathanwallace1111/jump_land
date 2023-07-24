@@ -44,10 +44,10 @@ export default function ControllerContextProvider({ children }) {
             e.preventDefault();
 
             if (!controller[KEYCODE_MAP[key]]) {
-                setController({
+                setController(controller => ({
                     ...controller,
                     [KEYCODE_MAP[key]]: true,
-                });
+                }));
             }
         }
     }
@@ -59,10 +59,10 @@ export default function ControllerContextProvider({ children }) {
             e.preventDefault();
 
             if (controller[KEYCODE_MAP[key]]) {
-            setController({
+                setController(controller => ({
                 ...controller,
                 [KEYCODE_MAP[key]]: false,
-            });
+            }));
         }
         }
     }

@@ -29,8 +29,8 @@ export default function MainMenu() {
         },
         {
             "icon": faGear,
-            "name": "Options",
-            "path": AppRoutePaths.Options
+            "name": "Settings",
+            "path": AppRoutePaths.Settings
         }
     ]
 
